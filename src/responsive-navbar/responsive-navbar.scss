@@ -1,7 +1,7 @@
 @import './colors';
 
 $nav-item-width: 200px;
-$nav-bar-height: 44px;
+$nav-bar-height: 56px;
 $select-min-width: $nav-item-width;
 $select-max-width: $nav-item-width * 1.5;
 
@@ -29,12 +29,12 @@ $select-max-width: $nav-item-width * 1.5;
   }
 
   .inactive-border {
-    border-bottom: 2px solid $oc-color-support-lightgray;
+    border-bottom: 4px solid $oc-color-support-lightgray;
   }
 
   .selected-border {
     box-shadow: none;
-    border-bottom: 2px solid $oc-color-primary-orange;
+    border-bottom: 4px solid $oc-color-primary-orange;
   }
 
   .responsive-navbar-item-text {
@@ -52,7 +52,7 @@ $select-max-width: $nav-item-width * 1.5;
   max-width: $select-max-width;
 
   .selected-border {
-    border-bottom: 2px solid $oc-color-primary-orange;
+    border-bottom: 4px solid $oc-color-primary-orange;
   }
 
   .Select {
