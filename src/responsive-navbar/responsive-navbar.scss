@@ -12,6 +12,7 @@ $select-max-width: $nav-item-width * 1.5;
   min-width: $nav-item-width*2;
   min-height: $nav-bar-height;
   flex-grow: 1;
+  color: $oc-color-primary-azure;
 
   .responsive-navbar-item {
     display: flex;
