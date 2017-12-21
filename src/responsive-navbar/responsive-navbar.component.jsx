@@ -13,14 +13,11 @@ import './responsive-navbar.scss';
 
 export class ResponsiveNavbar extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      updateDimenssions: true,
-      lastVisibleItemIndex: -1,
-      lastWidth: 0,
-    };
-  }
+  state = {
+    updateDimenssions: true,
+    lastVisibleItemIndex: -1,
+    lastWidth: 0,
+  };
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResizeEvent);
@@ -47,12 +44,29 @@ export class ResponsiveNavbar extends React.Component {
   }
 
   indexOfLastVisibleNavItem = () => {
-    const NAV_ITEM_MIN_WIDTH = 200;
     const container = this.refs.navbarContainer;
     const containerWidth = ReactDOM.findDOMNode(container) ?
       ReactDOM.findDOMNode(container).offsetWidth : 0;
-    const index = Math.floor((containerWidth / NAV_ITEM_MIN_WIDTH));
-    return index >= 0 ? index : 0;
+
+    let remainingWidth = containerWidth - 195;
+
+    let lastVisible = 1;
+    for (let i = 0; i < this.props.list.length - 1; i += 1) {
+      const item = this.refs[`navitemref${String(i)}`];
+      const node = ReactDOM.findDOMNode(item);
+      if (!node) {
+        break;
+      }
+      const itemWidth = node.offsetWidth;
+      remainingWidth -= itemWidth;
+      if (remainingWidth < 0) {
+        lastVisible -= 1;
+        break;
+      }
+      lastVisible += 1;
+    }
+
+    return lastVisible;
   }
 
   handleResizeEvent = () => {
