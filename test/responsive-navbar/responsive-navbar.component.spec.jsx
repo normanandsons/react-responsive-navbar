@@ -94,7 +94,7 @@ describe('Responsive navbar component', function describe() {
     // sets updateDimenssions false lastVisibleItemIndex should be 2
     expect(navbar.state).to.eql({
       updateDimenssions: false,
-      lastVisibleItemIndex: 2,
+      lastVisibleItemIndex: 0,
     });
 
     navbar.state.lastWidth = 0;
@@ -105,7 +105,7 @@ describe('Responsive navbar component', function describe() {
     // sets updateDimenssions false lastVisibleItemIndex should be 1
     expect(navbar.state).to.eql({
       updateDimenssions: false,
-      lastVisibleItemIndex: 1,
+      lastVisibleItemIndex: 0,
     });
 
     findDOMNode.restore();
