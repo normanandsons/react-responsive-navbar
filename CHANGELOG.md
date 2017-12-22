@@ -2,6 +2,10 @@
 
 * In general follow (https://docs.npmjs.com/getting-started/semantic-versioning) versioning.
 
+## 1.0.5
+
+* allow href to be string or number
+
 ## 1.0.2 - 1.0.4
 
 * Calculate item widths

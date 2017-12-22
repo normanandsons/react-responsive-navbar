@@ -197,7 +197,7 @@ ResponsiveNavbar.propTypes = {
       PropTypes.string,
       PropTypes.node,
     ]).isRequired,
-    href: PropTypes.string,
+    href: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   })).isRequired,
   onSelect: PropTypes.func,
 };
