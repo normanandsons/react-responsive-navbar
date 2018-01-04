@@ -127,7 +127,8 @@ export class ResponsiveNavbar extends React.Component {
   }
 
   combobox = () => {
-    if (this.state.lastVisibleItemIndex > this.props.list.length - 1) {
+    if (this.state.lastVisibleItemIndex === -1 ||
+        this.state.lastVisibleItemIndex > this.props.list.length - 1) {
       // return null if all nav items are visible
       return null;
     }
