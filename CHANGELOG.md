@@ -2,6 +2,9 @@
 
 * In general follow (https://docs.npmjs.com/getting-started/semantic-versioning) versioning.
 
+## 2.0.0
+* Upgrade to react 15.6.2
+
 ## 1.0.6
 
 * Don't render combobox if items fit on navbar
