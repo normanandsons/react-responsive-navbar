@@ -98,6 +98,7 @@ export class ResponsiveNavbar extends React.Component {
         `${className} selected-border` : `${className}`}
       style={{ fontWeight: this.props.fontWeight, fontSize: this.props.fontSize }}
       id={item.id || `navitemref${String(index)}`}
+      key={item.id || `navitemref${String(index)}`}
       ref={`navitemref${String(index)}`}
       onClick={() => { this.props.onSelect(item.href); }}
     >
