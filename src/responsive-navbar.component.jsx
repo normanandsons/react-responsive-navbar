@@ -120,7 +120,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
       <div
         id="responsive-navbar-container"
         ref={'navbarContainer'}
-        style={{ "min-height": this.props.height }}
+        style={{ "minHeight": this.props.height }}
       >
         {items}
         {this.combobox()}
