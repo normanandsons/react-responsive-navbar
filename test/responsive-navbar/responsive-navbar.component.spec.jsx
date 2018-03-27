@@ -3,10 +3,9 @@
 
 import React from 'react';
 import { expect } from 'chai';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import ReactDOM from 'react-dom';
 import sinon from 'sinon';
-import Select from 'react-select';
 
 import ResponsiveNavbar from '../../src/index';
 
@@ -19,17 +18,15 @@ describe('Responsive navbar component', function describe() {
       { id: 'Item4', name: 'Item 4', href: '/autocomplete' },
     ];
   });
-  
+
   it('should render navbar correctly', function it() {
     const activeKey = 2;
 
-    const wrapper = mount(
-      <ResponsiveNavbar
-        activeKey={activeKey}
-        list={this.list}
-        router={[]}
-      />,
-    );
+    const wrapper = mount(<ResponsiveNavbar
+      activeKey={activeKey}
+      list={this.list}
+      router={[]}
+    />);
 
     expect(wrapper.props().activeKey).to.eql(2);
     expect(wrapper.find('button').at(0).text()).to.eql('Style');
@@ -37,30 +34,20 @@ describe('Responsive navbar component', function describe() {
       { lastWidth: 0, updateDimenssions: true, lastVisibleItemIndex: -1 });
   });
 
-  xit('should render combobox correctly', function it() {
+  it('should render combobox correctly', function it() {
     const activeKey = 2;
 
-    const findDOMNode = sinon.stub(ReactDOM, 'findDOMNode').callsFake(() => (
-      {
-        offsetWidth: 400,
-      }
-    ));
-
-    const wrapper = mount(
-      <ResponsiveNavbar
-        activeKey={activeKey}
-        list={this.list}
-        router={[]}
-      />,
-    );
+    const wrapper = mount(<ResponsiveNavbar
+      activeKey={activeKey}
+      list={this.list}
+      router={[]}
+    />);
 
     // Make the call manually since there's is a timeout in componentDidMount
-    wrapper.get(0).handleResizeEvent();
-    //wrapper.instance().handleResizeEvent();
-
-    expect(wrapper.find('#ocResponsiveNavbarSelect').length).to.eql(1);
+    wrapper.instance().handleResizeEvent();
+    wrapper.update();
+    expect(wrapper.find('#ocResponsiveNavbarSelect').hostNodes().length).to.eql(1);
     expect(wrapper.find('Select').length).to.eql(1);
-    findDOMNode.restore();
   });
 
   it('updates state correctly', function it() {
@@ -80,8 +67,8 @@ describe('Responsive navbar component', function describe() {
 
     let offsetWidth = 400;
     const findDOMNode = sinon.stub(ReactDOM, 'findDOMNode').callsFake(() =>
-          ({ offsetWidth }),
-        );
+      ({ offsetWidth }),
+    );
 
     const navbarStub = sinon.stub(navbar, 'setState').callsFake((state) => {
       navbar.state = state;
