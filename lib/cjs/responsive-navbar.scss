@@ -1,0 +1,80 @@
+@import '~@opuscapita/oc-cm-common-styles/styles/colors';
+
+$nav-item-width: 200px;
+$select-min-width: $nav-item-width;
+$select-max-width: $nav-item-width * 1.5;
+$border-bottom: 2px;
+
+#responsive-navbar-container {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  min-width: $select-min-width;
+  flex-grow: 1;
+  color: $oc-color-primary-azure;
+
+  .responsive-navbar-item {
+    display: flex;
+    align-items:center;
+    border:none;
+    background-color: transparent;
+    outline: none;
+    border-bottom: $border-bottom solid #D3DADE;
+
+    &:focus {
+      box-shadow: none;
+      outline: none;
+    }
+  }
+
+  .inactive-border {
+    border-bottom: $border-bottom solid $oc-color-support-lightgray;
+  }
+
+  .selected-border {
+    box-shadow: none;
+    border-bottom: $border-bottom solid $oc-color-primary-orange;
+  }
+
+  .responsive-navbar-item-text {
+      overflow-x: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      margin: 0 5px 0 5px;
+  }
+}
+
+#responsive-navbar-select {
+  font-weight: inherit;
+  font-size: inherit;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  margin: 0;
+  min-width: $select-min-width;
+  max-width: $select-max-width;
+
+  .selected-border {
+    border-bottom: $border-bottom solid $oc-color-primary-orange;
+  }
+
+  .Select {
+    margin-left: 5px;
+  }
+
+  .Select-option {
+    min-height: 32px;
+    color: inherit;
+  }
+
+  .Select-control, .Select-value, .Select-value-label {
+      color: inherit;
+      box-shadow: none;
+  }
+
+  .is-focused:not(.is-open) > .Select-control {
+    border-color: $oc-color-support-lightgray !important;
+  }
+}
