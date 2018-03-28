@@ -11,7 +11,7 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import 'react-select/dist/react-select.css';
 import './responsive-navbar.scss';
 
-export class ResponsiveNavbar extends React.Component {
+export default class ResponsiveNavbar extends React.PureComponent {
 
   state = {
     updateDimenssions: true,
@@ -120,6 +120,7 @@ export class ResponsiveNavbar extends React.Component {
       <div
         id="responsive-navbar-container"
         ref={'navbarContainer'}
+        style={{ "minHeight": this.props.height }}
       >
         {items}
         {this.combobox()}
@@ -184,6 +185,7 @@ ResponsiveNavbar.defaultProps = {
   fontSize: 'inherit',
   fontWeight: 'inherit',
   placeholder: 'more...',
+  height: '40px',
 };
 
 ResponsiveNavbar.propTypes = {
@@ -202,6 +204,5 @@ ResponsiveNavbar.propTypes = {
     href: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   })).isRequired,
   onSelect: PropTypes.func,
+  height: PropTypes.string,
 };
-
-export default ResponsiveNavbar;

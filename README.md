@@ -2,7 +2,7 @@
 
 ### [Demo](https://opuscapita.github.io/react-responsive-navbar)
 
-### [API](./src/responsive-navbar/README.md)
+### [API](./src/README.md)
 
 ### Installation
 

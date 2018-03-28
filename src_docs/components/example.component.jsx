@@ -1,13 +1,13 @@
 import React from 'react';
-import { ResponsiveNavbar } from '../../../src/index';
-import './responsive-navbar-view.scss';
+import ResponsiveNavbar from '../../src/index';
 
-
-class ResponsiveNavbarView extends React.Component {
-
-  state = {
-    activeKey: 0,
-  };
+export default class ComponentView extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      activeKey: 0,
+    };
+  }
 
   render() {
     const list = [
@@ -18,7 +18,7 @@ class ResponsiveNavbarView extends React.Component {
     ];
 
     return (
-      <div className="navbar-top-margin">
+      <div style={{ padding: '20px' }}>
         <ResponsiveNavbar
           activeKey={this.state.activeKey}
           list={list}
@@ -29,5 +29,3 @@ class ResponsiveNavbarView extends React.Component {
     );
   }
 }
-
-export default ResponsiveNavbarView;

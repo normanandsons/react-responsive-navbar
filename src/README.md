@@ -25,9 +25,10 @@ N/A
 | showNavItemBorder | boolean                                 | false     | show bottom-border below navbar items |
 | showNavItemTooltip| boolean                                 | true      | enables tooltips for nav items        |
 | tooltipDelay      | number                                  | 2000      | delay before tooltip becomes visible  |
-| fontSize          | string                                  | 'inherit' | override for  fontSize                |
+| fontSize          | string                                  | 'inherit' | override for fontSize                 |
 | fontWeight        | string                                  | 'inherit' | override for fontWeight               |
-| placeholder       | string                                  | 'more...' | override for placeholder text        |
+| placeholder       | string                                  | 'more...' | override for placeholder text         |
+| height            | string                                  | 40px      | override for height                   |
 
 | Function | Parameters   | Returns | Description                              |
 | -------- | ------------ | ------- | ---------------------------------------- |
