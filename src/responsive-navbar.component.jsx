@@ -12,7 +12,6 @@ import 'react-select/dist/react-select.css';
 import './responsive-navbar.scss';
 
 export default class ResponsiveNavbar extends React.PureComponent {
-
   state = {
     updateDimenssions: true,
     lastVisibleItemIndex: -1,
@@ -31,7 +30,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
   componentDidUpdate() {
     if (this.state.updateDimenssions) {
       this.setState({ // eslint-disable-line react/no-did-update-set-state
-                      // 2nd render is triggered here in purpose
+        // 2nd render is triggered here in purpose
         updateDimenssions: false,
         lastVisibleItemIndex: this.indexOfLastVisibleNavItem(),
       });
@@ -119,8 +118,8 @@ export default class ResponsiveNavbar extends React.PureComponent {
     return (
       <div
         id="responsive-navbar-container"
-        ref={'navbarContainer'}
-        style={{ "minHeight": this.props.height }}
+        ref="navbarContainer"
+        style={{ minHeight: this.props.height }}
       >
         {items}
         {this.combobox()}
@@ -145,12 +144,11 @@ export default class ResponsiveNavbar extends React.PureComponent {
         label: item.name,
         id: index,
         ref: `navitemref${String(index)}`,
-      }),
-    );
+      }));
 
     const inactiveBorder = this.props.showNavItemBorder ? 'inactive-border' : '';
     const borderClass = this.props.activeKey >= this.state.lastVisibleItemIndex ?
-    'selected-border' : inactiveBorder;
+      'selected-border' : inactiveBorder;
     const activeItem = this.props.list[this.props.activeKey];
     return (
       <div

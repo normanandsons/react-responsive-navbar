@@ -2,6 +2,8 @@
 
 * In general follow (https://docs.npmjs.com/getting-started/semantic-versioning) versioning.
 
+## next
+
 ## 3.0.0
 * Changed height configurable, default 40px
 * Update to React 16.2
