@@ -1,38 +1,62 @@
 # react-responsive-navbar
 
-### [Demo](https://opuscapita.github.io/react-responsive-navbar)
-
-### [API](./src/README.md)
+### Description
+Navbar component that moves the navbar items to a dropdown, if they do not fit in the content area.
 
 ### Installation
-
 ```
-npm install --save @opuscapita/react-responsive-navbar
+npm install @opuscapita/react-responsive-navbar
 ```
 
-### Development
+### Demo
+View the [DEMO](https://opuscapita.github.io/react-responsive-navbar)
 
-* Run `npm install` to get the project's dependencies
-* Run `npm run build` to produce minified version of the library
-* Run `npm run dev` to produce development version of the library.
-* Run `npm run test` to run tests
-* Run `npm run docs` to run generate examples
+### Builds
+#### UMD
+The default build with compiled styles in the .js file. Also minified version available in the lib/umd directory.
+#### CommonJS/ES Module
+You need to configure your module loader to use `cjs` or `es` fields of the package.json to use these module types.
+Also you need to configure sass loader, since all the styles are in sass format.
+* With webpack use [resolve.mainFields](https://webpack.js.org/configuration/resolve/#resolve-mainfields) to configure the module type.
+* Add [SASS loader](https://github.com/webpack-contrib/sass-loader) to support importing of SASS styles.
 
-#### Development workflow
-* Run `npm run docs`
-* Open `docs/index.html`
+### API
+| Prop name         | Type                                    | Default   | Description                           |
+| ------------------| --------------------------------------- | --------- | ------------------------------------- |
+| activeKey         | number                                  | required  | Navbar item to be active initially    |
+| list              | list [{id: id, name: name, href: href}] | required  |                                       |
+| showNavItemBorder | boolean                                 | false     | show bottom-border below navbar items |
+| showNavItemTooltip| boolean                                 | true      | enables tooltips for nav items        |
+| tooltipDelay      | number                                  | 2000      | delay before tooltip becomes visible  |
+| fontSize          | string                                  | 'inherit' | override for fontSize                 |
+| fontWeight        | string                                  | 'inherit' | override for fontWeight               |
+| placeholder       | string                                  | 'more...' | override for placeholder text         |
+| height            | string                                  | 40px      | override for height                   |
 
-  Or
+| Function | Parameters   | Returns | Description                              |
+| -------- | ------------ | ------- | ---------------------------------------- |
+| onSelect | href: string |         | Callback fired when the active item changes |
 
-* Run `npm run hot`
-* Open `http://localhost:5555/`
+### Code example
+```jsx
+import ResponsiveNavbar from '@opuscapita/react-responsive-navbar';
 
-#### Contributing
-* Make a new branch for the changes
-* Update `CHANGELOG.md` file
-* Commit changes (not `lib`)
-* Make a pull request
+const ResponsiveNavbarView = (props) => {
+  const list = [
+    { name: 'Item 1', href: '/item1' },
+    { name: 'Item 2', href: '/item2' },
+  ];
 
-#### Creating a new release
-* Run `npm version [major|minor|patch]` [Info](https://docs.npmjs.com/cli/version)
-* Run `npm publish`
+  const activeKey = 2;
+
+  return (
+    <ResponsiveNavbar
+      activeKey={activeKey}
+      list={list}
+      onSelect={(href) => { props.router.push(href); }}
+    />
+  );
+};
+
+export default withRouter(ResponsiveNavbarView);
+```
