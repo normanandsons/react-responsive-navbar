@@ -4,6 +4,9 @@
 
 ## next
 
+## 3.0.2
+* Fix package name to webpack config
+
 ## 3.0.1
 * Changed README.md to new react component template format
 
