@@ -3,6 +3,8 @@
 * In general follow (https://docs.npmjs.com/getting-started/semantic-versioning) versioning.
 
 ## next
+
+## 3.0.3
 * Fix navbar height on IE
 * Update @opuscapita/oc-cm-common-styles
 
