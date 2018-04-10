@@ -77,4 +77,8 @@ $border-bottom: 2px;
   .is-focused:not(.is-open) > .Select-control {
     border-color: $oc-color-support-lightgray !important;
   }
+
+  .Select-arrow-zone {
+    line-height: 20px;
+  }
 }
