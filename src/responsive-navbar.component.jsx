@@ -2,7 +2,6 @@
 /* eslint-disable react/no-string-refs */
 /* eslint-disable react/no-find-dom-node */
 /* eslint-disable react/prop-types */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
@@ -12,6 +11,36 @@ import 'react-select/dist/react-select.css';
 import './responsive-navbar.scss';
 
 export default class ResponsiveNavbar extends React.PureComponent {
+  static defaultProps = {
+    onSelect: null,
+    showNavItemBorder: false,
+    showNavItemTooltip: true,
+    tooltipDelay: 2000,
+    fontSize: 'inherit',
+    fontWeight: 'inherit',
+    placeholder: 'more...',
+    height: '40px',
+  }
+
+  static propTypes = {
+    showNavItemBorder: PropTypes.bool,
+    showNavItemTooltip: PropTypes.bool,
+    tooltipDelay: PropTypes.number,
+    fontSize: PropTypes.string,
+    fontWeight: PropTypes.string,
+    placeholder: PropTypes.string,
+    activeKey: PropTypes.number.isRequired,
+    list: PropTypes.arrayOf(PropTypes.shape({
+      name: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.node,
+      ]).isRequired,
+      href: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    })).isRequired,
+    onSelect: PropTypes.func,
+    height: PropTypes.string,
+  }
+
   state = {
     updateDimenssions: true,
     lastVisibleItemIndex: -1,
@@ -114,12 +143,18 @@ export default class ResponsiveNavbar extends React.PureComponent {
     const items = list.map((item, index) => (
       this.tooltipWrapper(this.navbarItem(item, index, className), index, item.name)
     ));
-
+    const navbarStyle = {
+      minHeight: this.props.height,
+    };
+    if (this.props.height.slice(-2) === 'px') {
+      const heightPx = parseInt(this.props.height.slice(0, -2), 10);
+      navbarStyle.lineHeight = `${(heightPx - 4)}px`;
+    }
     return (
       <div
         id="responsive-navbar-container"
         ref="navbarContainer"
-        style={{ minHeight: this.props.height }}
+        style={navbarStyle}
       >
         {items}
         {this.combobox()}
@@ -175,32 +210,3 @@ export default class ResponsiveNavbar extends React.PureComponent {
   }
 }
 
-ResponsiveNavbar.defaultProps = {
-  onSelect: null,
-  showNavItemBorder: false,
-  showNavItemTooltip: true,
-  tooltipDelay: 2000,
-  fontSize: 'inherit',
-  fontWeight: 'inherit',
-  placeholder: 'more...',
-  height: '40px',
-};
-
-ResponsiveNavbar.propTypes = {
-  showNavItemBorder: PropTypes.bool,
-  showNavItemTooltip: PropTypes.bool,
-  tooltipDelay: PropTypes.number,
-  fontSize: PropTypes.string,
-  fontWeight: PropTypes.string,
-  placeholder: PropTypes.string,
-  activeKey: PropTypes.number.isRequired,
-  list: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.node,
-    ]).isRequired,
-    href: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  })).isRequired,
-  onSelect: PropTypes.func,
-  height: PropTypes.string,
-};
