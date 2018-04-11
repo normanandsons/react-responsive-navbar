@@ -83,7 +83,6 @@
     "react-hot-loader": "4.0.1",
     "react-router": "4.2.0",
     "react-router-dom": "4.2.2",
-    "react-select": "1.2.1",
     "react-svg-loader": "2.1.0",
     "react-test-renderer": "16.2.0",
     "rimraf": "2.6.2",
@@ -99,7 +98,8 @@
     "write-file-webpack-plugin": "4.2.0"
   },
   "dependencies": {
-    "@opuscapita/oc-cm-common-styles": "2.1.0"
+    "@opuscapita/oc-cm-common-styles": "2.1.0",
+    "react-select": "1.2.1"
   },
   "repository": {
     "type": "git",
