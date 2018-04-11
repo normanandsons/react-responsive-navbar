@@ -4,6 +4,9 @@
 
 ## next
 
+## 3.0.4
+* Added react-select added to dependencies
+
 ## 3.0.3
 * Fix navbar height on IE
 * Update @opuscapita/oc-cm-common-styles
