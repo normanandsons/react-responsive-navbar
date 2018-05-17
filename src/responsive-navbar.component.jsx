@@ -20,6 +20,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
     fontWeight: 'inherit',
     placeholder: 'more...',
     height: '40px',
+    initialUpdateDelay: 200,
   }
 
   static propTypes = {
@@ -39,10 +40,11 @@ export default class ResponsiveNavbar extends React.PureComponent {
     })).isRequired,
     onSelect: PropTypes.func,
     height: PropTypes.string,
+    initialUpdateDelay: PropTypes.number,
   }
 
   state = {
-    updateDimenssions: true,
+    updateDimenssions: false,
     lastVisibleItemIndex: -1,
     lastWidth: 0,
   };
@@ -53,7 +55,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
     // Component is not rendered yet by browser when DidMount is called
     setTimeout(() => {
       this.handleResizeEvent();
-    }, 200);
+    }, this.props.initialUpdateDelay);
   }
 
   componentDidUpdate() {
@@ -209,4 +211,3 @@ export default class ResponsiveNavbar extends React.PureComponent {
     return this.navbar();
   }
 }
-
