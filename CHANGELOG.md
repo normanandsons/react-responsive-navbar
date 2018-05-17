@@ -4,6 +4,9 @@
 
 ## next
 
+## 3.0.5
+* made initial update delay configurable (default value 200ms). 
+
 ## 3.0.4
 * Added react-select added to dependencies
 
