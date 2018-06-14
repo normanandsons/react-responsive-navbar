@@ -3,6 +3,8 @@
 * In general follow (https://docs.npmjs.com/getting-started/semantic-versioning) versioning.
 
 ## next
+
+## 3.1.6
 * Added 'id' property to the component. Fixed HTML id values
 
 ## 3.0.6
