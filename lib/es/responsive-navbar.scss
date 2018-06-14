@@ -5,7 +5,7 @@ $select-min-width: $nav-item-width;
 $select-max-width: $nav-item-width * 1.5;
 $border-bottom: 2px;
 
-#responsive-navbar-container {
+.responsive-navbar-container {
   display: flex;
   flex-direction: row;
   background-color: white;
@@ -43,7 +43,7 @@ $border-bottom: 2px;
   }
 }
 
-#responsive-navbar-select {
+.responsive-navbar-select {
   font-weight: inherit;
   font-size: inherit;
   height: inherit;
