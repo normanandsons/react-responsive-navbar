@@ -21,6 +21,7 @@ export default class ComponentView extends React.PureComponent {
       <div style={{ padding: '20px' }}>
         <ResponsiveNavbar
           activeKey={this.state.activeKey}
+          id="example-responsive-navigation-bar"
           list={list}
           showNavItemBorder
           onSelect={(activeKey) => { this.setState({ activeKey }); }}

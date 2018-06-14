@@ -3,6 +3,7 @@
 * In general follow (https://docs.npmjs.com/getting-started/semantic-versioning) versioning.
 
 ## next
+* Added 'id' property to the component. Fixed HTML id values
 
 ## 3.0.6
 * inactive navbar style fix

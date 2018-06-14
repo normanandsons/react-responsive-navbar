@@ -12,6 +12,7 @@ import './responsive-navbar.scss';
 
 export default class ResponsiveNavbar extends React.PureComponent {
   static defaultProps = {
+    id: null,
     onSelect: null,
     showNavItemBorder: false,
     showNavItemTooltip: true,
@@ -24,6 +25,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
   }
 
   static propTypes = {
+    id: PropTypes.string,
     showNavItemBorder: PropTypes.bool,
     showNavItemTooltip: PropTypes.bool,
     tooltipDelay: PropTypes.number,
@@ -72,6 +74,8 @@ export default class ResponsiveNavbar extends React.PureComponent {
     window.removeEventListener('resize', this.handleResizeEvent);
     window.removeEventListener('orientationchange', this.handleResizeEvent); // for mobile support
   }
+
+  getMainPartOfId = () => (this.props.id || 'responsive-navbar');
 
   indexOfLastVisibleNavItem = () => {
     const container = this.refs.navbarContainer;
@@ -154,8 +158,9 @@ export default class ResponsiveNavbar extends React.PureComponent {
     }
     return (
       <div
-        id="responsive-navbar-container"
+        id={`${this.getMainPartOfId()}-container`}
         ref="navbarContainer"
+        className="responsive-navbar-container"
         style={navbarStyle}
       >
         {items}
@@ -189,8 +194,8 @@ export default class ResponsiveNavbar extends React.PureComponent {
     const activeItem = this.props.list[this.props.activeKey];
     return (
       <div
-        id="responsive-navbar-select"
-        className={borderClass}
+        id={`${this.getMainPartOfId()}-select`}
+        className={`responsive-navbar-select ${borderClass}`}
         style={{ fontWeight: this.props.fontWeight, fontSize: this.props.fontSize }}
       >
         <Select
