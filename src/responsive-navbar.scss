@@ -26,6 +26,10 @@ $border-bottom: 2px;
     }
   }
 
+  .no-item-border {
+    border-bottom: $border-bottom solid transparent;
+  }
+
   .inactive-border {
     border-bottom: $border-bottom solid $oc-color-support-lightgray;
   }

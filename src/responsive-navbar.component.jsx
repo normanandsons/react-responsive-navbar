@@ -145,7 +145,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
       this.props.list.slice(0, this.state.lastVisibleItemIndex)
       : this.props.list;
     const className = this.props.showNavItemBorder ?
-      'responsive-navbar-item inactive-border' : 'responsive-navbar-item';
+      'responsive-navbar-item inactive-border' : 'responsive-navbar-item no-item-border';
     const items = list.map((item, index) => (
       this.tooltipWrapper(this.navbarItem(item, index, className), index, item.name)
     ));
