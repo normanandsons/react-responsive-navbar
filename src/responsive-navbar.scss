@@ -84,4 +84,18 @@ $border-bottom: 2px;
   .Select-arrow-zone {
     line-height: 20px;
   }
+
+}
+
+.Select-input {
+  .line-count & {
+    line-height: initial;
+  }
+}
+
+
+.Select-placeholder, .Select--single > .Select-control .Select-value {
+  .line-count & {
+    line-height: unset; // unset
+  }
 }
