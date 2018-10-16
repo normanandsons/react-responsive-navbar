@@ -26,6 +26,10 @@ $border-bottom: 2px;
     }
   }
 
+  .no-item-border {
+    border-bottom: $border-bottom solid transparent;
+  }
+
   .inactive-border {
     border-bottom: $border-bottom solid $oc-color-support-lightgray;
   }
@@ -79,5 +83,19 @@ $border-bottom: 2px;
 
   .Select-arrow-zone {
     line-height: 20px;
+  }
+
+}
+
+.Select-input {
+  .line-count & {
+    line-height: initial;
+  }
+}
+
+
+.Select-placeholder, .Select--single > .Select-control .Select-value {
+  .line-count & {
+    line-height: unset; // unset
   }
 }

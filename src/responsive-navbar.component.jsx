@@ -140,19 +140,25 @@ export default class ResponsiveNavbar extends React.PureComponent {
     </button>
   )
 
+  doLineCount = () => {
+    const { list } = this.props;
+    return list.some(item => typeof(item.name) !== 'string');
+  }
+
   navbar = () => {
     const list = this.state.lastVisibleItemIndex >= 0 ?
       this.props.list.slice(0, this.state.lastVisibleItemIndex)
       : this.props.list;
     const className = this.props.showNavItemBorder ?
-      'responsive-navbar-item inactive-border' : 'responsive-navbar-item';
+      'responsive-navbar-item inactive-border' : 'responsive-navbar-item no-item-border';
     const items = list.map((item, index) => (
       this.tooltipWrapper(this.navbarItem(item, index, className), index, item.name)
-    ));
+    ))
+    const lineCount = this.doLineCount();
     const navbarStyle = {
       minHeight: this.props.height,
     };
-    if (this.props.height.slice(-2) === 'px') {
+    if (this.props.height.slice(-2) === 'px' && lineCount) {
       const heightPx = parseInt(this.props.height.slice(0, -2), 10);
       navbarStyle.lineHeight = `${(heightPx - 4)}px`;
     }
@@ -170,42 +176,52 @@ export default class ResponsiveNavbar extends React.PureComponent {
   }
 
   combobox = () => {
+    const {
+      list,
+      onSelect,
+      fontSize,
+      activeKey,
+      fontWeight,
+      placeholder,
+      showNavItemBorder,
+    } = this.props;
     if (this.state.lastVisibleItemIndex === -1 ||
-        this.state.lastVisibleItemIndex > this.props.list.length - 1) {
+        this.state.lastVisibleItemIndex > list.length - 1) {
       // return null if all nav items are visible
       return null;
     }
 
     // slice nav items list and show invisible items in the combobox
-    const list = this.state.lastVisibleItemIndex >= 0 ?
-      this.props.list.slice(this.state.lastVisibleItemIndex)
-      : this.props.list;
-    const items = list.map((item, index) =>
+    const navList = this.state.lastVisibleItemIndex >= 0 ?
+      list.slice(this.state.lastVisibleItemIndex) : list;
+    const items = navList.map((item, index) =>
       ({
         value: item.href,
         label: item.name,
         id: index,
         ref: `navitemref${String(index)}`,
       }));
-
-    const inactiveBorder = this.props.showNavItemBorder ? 'inactive-border' : '';
-    const borderClass = this.props.activeKey >= this.state.lastVisibleItemIndex ?
-      'selected-border' : inactiveBorder;
-    const activeItem = this.props.list[this.props.activeKey];
+    const lineCountNeeded = this.doLineCount();
+    const customLineCount = lineCountNeeded ? 'line-count' : '';
+    const customBorderClass = lineCountNeeded ? 'selected-border line-count' : 'selected-border';
+    const customInactiveBorder = lineCountNeeded ? 'inactive-border line-count' : 'inactive-border';
+    const inactiveBorder = showNavItemBorder ? customInactiveBorder : customLineCount;
+    const borderClass = activeKey >= this.state.lastVisibleItemIndex ? customBorderClass : inactiveBorder;
+    const activeItem = list[activeKey];
     return (
       <div
         id={`${this.getMainPartOfId()}-select`}
         className={`responsive-navbar-select ${borderClass}`}
-        style={{ fontWeight: this.props.fontWeight, fontSize: this.props.fontSize }}
+        style={{ fontWeight: fontWeight, fontSize: fontSize }}
       >
         <Select
           name="responsiveNavbarSelect"
           multi={false}
           value={activeItem ? activeItem.href : ''}
           clearable={false}
-          placeholder={this.props.placeholder}
+          placeholder={placeholder}
           options={items}
-          onChange={(item) => { this.props.onSelect(item.value); }}
+          onChange={(item) => { onSelect(item.value); }}
           inputProps={{ id: 'ocResponsiveNavbarSelect' }}
         />
       </div>
