@@ -11,19 +11,6 @@ import 'react-select/dist/react-select.css';
 import './responsive-navbar.scss';
 
 export default class ResponsiveNavbar extends React.PureComponent {
-  static defaultProps = {
-    id: null,
-    onSelect: null,
-    showNavItemBorder: false,
-    showNavItemTooltip: true,
-    tooltipDelay: 2000,
-    fontSize: 'inherit',
-    fontWeight: 'inherit',
-    placeholder: 'more...',
-    height: '40px',
-    initialUpdateDelay: 200,
-  }
-
   static propTypes = {
     id: PropTypes.string,
     showNavItemBorder: PropTypes.bool,
@@ -43,6 +30,19 @@ export default class ResponsiveNavbar extends React.PureComponent {
     onSelect: PropTypes.func,
     height: PropTypes.string,
     initialUpdateDelay: PropTypes.number,
+  }
+
+  static defaultProps = {
+    id: null,
+    onSelect: null,
+    showNavItemBorder: false,
+    showNavItemTooltip: true,
+    tooltipDelay: 2000,
+    fontSize: 'inherit',
+    fontWeight: 'inherit',
+    placeholder: 'more...',
+    height: '40px',
+    initialUpdateDelay: 200,
   }
 
   state = {
@@ -142,7 +142,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
 
   doLineCount = () => {
     const { list } = this.props;
-    return list.some(item => typeof(item.name) !== 'string');
+    return list.some(item => typeof (item.name) !== 'string');
   }
 
   navbar = () => {
@@ -153,7 +153,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
       'responsive-navbar-item inactive-border' : 'responsive-navbar-item no-item-border';
     const items = list.map((item, index) => (
       this.tooltipWrapper(this.navbarItem(item, index, className), index, item.name)
-    ))
+    ));
     const lineCount = this.doLineCount();
     const navbarStyle = {
       minHeight: this.props.height,
@@ -206,13 +206,13 @@ export default class ResponsiveNavbar extends React.PureComponent {
     const customBorderClass = lineCountNeeded ? 'selected-border line-count' : 'selected-border';
     const customInactiveBorder = lineCountNeeded ? 'inactive-border line-count' : 'inactive-border';
     const inactiveBorder = showNavItemBorder ? customInactiveBorder : customLineCount;
-    const borderClass = activeKey >= this.state.lastVisibleItemIndex ? customBorderClass : inactiveBorder;
+    const borderClass = activeKey >= this.state.lastVisibleItemIndex ? customBorderClass : inactiveBorder; // eslint-disable-line
     const activeItem = list[activeKey];
     return (
       <div
         id={`${this.getMainPartOfId()}-select`}
         className={`responsive-navbar-select ${borderClass}`}
-        style={{ fontWeight: fontWeight, fontSize: fontSize }}
+        style={{ fontWeight, fontSize }}
       >
         <Select
           name="responsiveNavbarSelect"
