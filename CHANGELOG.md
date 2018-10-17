@@ -4,6 +4,10 @@
 
 ## next
 
+## 3.1.7
+* Updated eslint related packages
+* Fix for 'showNavItemBorder' property: when false keep NavItem aligned with selected ones
+
 ## 3.1.6
 * Added 'id' property to the component. Fixed HTML id values
 
