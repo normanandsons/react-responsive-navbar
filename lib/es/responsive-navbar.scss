@@ -62,40 +62,4 @@ $border-bottom: 2px;
   .selected-border {
     border-bottom: $border-bottom solid $oc-color-primary-orange;
   }
-
-  .Select {
-    margin-left: 5px;
-  }
-
-  .Select-option {
-    min-height: 32px;
-    color: inherit;
-  }
-
-  .Select-control, .Select-value, .Select-value-label {
-      color: inherit;
-      box-shadow: none;
-  }
-
-  .is-focused:not(.is-open) > .Select-control {
-    border-color: $oc-color-support-lightgray !important;
-  }
-
-  .Select-arrow-zone {
-    line-height: 20px;
-  }
-
-}
-
-.Select-input {
-  .line-count & {
-    line-height: initial;
-  }
-}
-
-
-.Select-placeholder, .Select--single > .Select-control .Select-value {
-  .line-count & {
-    line-height: unset; // unset
-  }
 }
