@@ -30,8 +30,11 @@ describe('Responsive navbar component', function describe() {
 
     expect(wrapper.props().activeKey).to.eql(2);
     expect(wrapper.find('button').at(0).text()).to.eql('Style');
-    expect(wrapper.state()).to.eql(
-      { lastWidth: 0, updateDimenssions: false, lastVisibleItemIndex: -1 });
+    expect(wrapper.state()).to.eql({
+      lastWidth: 0,
+      updateDimenssions: false,
+      lastVisibleItemIndex: -1,
+    });
   });
 
   it('should render combobox correctly', function it() {
@@ -46,7 +49,7 @@ describe('Responsive navbar component', function describe() {
     // Make the call manually since there's is a timeout in componentDidMount
     wrapper.instance().handleResizeEvent();
     wrapper.update();
-    expect(wrapper.find('#ocResponsiveNavbarSelect').hostNodes().length).to.eql(1);
+    expect(wrapper.find('#responsive-navbar-input').hostNodes().length).to.eql(1);
     expect(wrapper.find('Select').length).to.eql(1);
   });
 
