@@ -4,6 +4,11 @@
 
 ## next
 
+## 3.1.8
+* Use `@opuscapita/react-floating-select` instead of old `react-select`
+* Fix select input id
+* Update packages
+
 ## 3.1.7
 * Updated eslint related packages
 * Fix for 'showNavItemBorder' property: when false keep NavItem aligned with selected ones

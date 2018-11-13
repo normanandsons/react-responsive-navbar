@@ -5,9 +5,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
-import Select from 'react-select';
+import { FloatingSelect } from '@opuscapita/react-floating-select';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import 'react-select/dist/react-select.css';
 import './responsive-navbar.scss';
 
 export default class ResponsiveNavbar extends React.PureComponent {
@@ -214,15 +213,14 @@ export default class ResponsiveNavbar extends React.PureComponent {
         className={`responsive-navbar-select ${borderClass}`}
         style={{ fontWeight, fontSize }}
       >
-        <Select
+        <FloatingSelect
           name="responsiveNavbarSelect"
-          multi={false}
           value={activeItem ? activeItem.href : ''}
-          clearable={false}
+          isClearable={false}
           placeholder={placeholder}
           options={items}
           onChange={(item) => { onSelect(item.value); }}
-          inputProps={{ id: 'ocResponsiveNavbarSelect' }}
+          inputId={`${this.getMainPartOfId()}-input`}
         />
       </div>
     );
