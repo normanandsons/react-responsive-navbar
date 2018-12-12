@@ -21,21 +21,21 @@ Also you need to configure sass loader, since all the styles are in sass format.
 * Add [SASS loader](https://github.com/webpack-contrib/sass-loader) to support importing of SASS styles.
 
 ### API
-| Prop name         | Type                                    | Default   | Description                           |
-| ------------------| --------------------------------------- | --------- | ------------------------------------- |
-| activeKey         | number                                  | required  | Navbar item to be active initially    |
-| list              | list [{id: id, name: name, href: href}] | required  |                                       |
-| showNavItemBorder | boolean                                 | false     | show bottom-border below navbar items |
-| showNavItemTooltip| boolean                                 | true      | enables tooltips for nav items        |
-| tooltipDelay      | number                                  | 2000      | delay before tooltip becomes visible  |
-| fontSize          | string                                  | 'inherit' | override for fontSize                 |
-| fontWeight        | string                                  | 'inherit' | override for fontWeight               |
-| placeholder       | string                                  | 'more...' | override for placeholder text         |
-| height            | string                                  | 40px      | override for height                   |
-
-| Function | Parameters   | Returns | Description                              |
-| -------- | ------------ | ------- | ---------------------------------------- |
-| onSelect | href: string |         | Callback fired when the active item changes |
+| Prop name          | Type                         | Default             | Description                                 |
+| ------------------ | ---------------------------- | ------------------- | ------------------------------------------- |
+| id                 | string                       | 'responsive-navbar' | Custom ID prefix                            |
+| className          | string                       |                     | Custon className                            |
+| activeKey          | number                       | required            | Navbar item to be active initially          |
+| list               | array of object (name, href) | required            | List of navbar items                        |
+| showNavItemBorder  | boolean                      | false               | show bottom-border below navbar items       |
+| showNavItemTooltip | boolean                      | true                | enables tooltips for nav items              |
+| tooltipDelay       | number                       | 2000                | delay before tooltip becomes visible        |
+| fontSize           | string                       | 'inherit'           | override for fontSize                       |
+| fontWeight         | string                       | 'inherit'           | override for fontWeight                     |
+| placeholder        | string                       | 'more...'           | override for placeholder text               |
+| height             | string                       | 40px                | override for height                         |
+| height             | string                       | 40px                | override for height                         |
+| onSelect           | function                     |                     | Callback fired when the active item changes |
 
 ### Code example
 ```jsx
