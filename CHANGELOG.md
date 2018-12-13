@@ -4,6 +4,14 @@
 
 ## next
 
+## 3.2.0
+* Add `componentRight` prop for custom component at right
+* Add `className` prop for styled-components compability
+* Remove getDOMNode references
+* Function style refs
+* Refactor code
+* Upgrade `@opuscapita/react-floating-select`
+
 ## 3.1.8
 * Use `@opuscapita/react-floating-select` instead of old `react-select`
 * Fix select input id

@@ -23,40 +23,53 @@ export default () => (
       </Col>
     </Row>
     <Row>
-      <Col xs={11} md={8} lg={6}>
+      <Col xs={11}>
         <Panel>
           <Panel.Heading>With NavItemBorder</Panel.Heading>
           <Panel.Body><ExampleComponent /></Panel.Body>
         </Panel>
+      </Col>
 
+      <Col xs={11}>
         <Panel>
           <Panel.Heading>With NavItemBorder & Component in options</Panel.Heading>
           <Panel.Body><ExampleComponent exampleId={2} /></Panel.Body>
         </Panel>
+      </Col>
 
+      <Col xs={11}>
         <Panel>
           <Panel.Heading>Custom height, With NavItemBorder & Component in options</Panel.Heading>
           <Panel.Body><ExampleComponent exampleId={3} /></Panel.Body>
         </Panel>
-
       </Col>
 
-      <Col xs={11} md={8} lg={6}>
+      <Col xs={11}>
         <Panel>
           <Panel.Heading>Without NavItemBorder</Panel.Heading>
           <Panel.Body><ExampleComponent exampleId={4} /></Panel.Body>
         </Panel>
+      </Col>
 
+      <Col xs={11}>
         <Panel>
           <Panel.Heading>Without NavItemBorder & Component in options</Panel.Heading>
           <Panel.Body><ExampleComponent exampleId={5} /></Panel.Body>
         </Panel>
+      </Col>
 
+      <Col xs={11}>
         <Panel>
           <Panel.Heading>Custom height, Without NavItemBorder & Component in options</Panel.Heading>
           <Panel.Body><ExampleComponent exampleId={6} /></Panel.Body>
         </Panel>
+      </Col>
 
+      <Col xs={11}>
+        <Panel>
+          <Panel.Heading>Custom component at right</Panel.Heading>
+          <Panel.Body><ExampleComponent exampleId={7} /></Panel.Body>
+        </Panel>
       </Col>
     </Row>
   </Grid>

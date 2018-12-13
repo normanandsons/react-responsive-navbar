@@ -1,17 +1,16 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/no-string-refs */
 /* eslint-disable react/no-find-dom-node */
-/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
 import { FloatingSelect } from '@opuscapita/react-floating-select';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { debounce } from 'debounce';
+
 import './responsive-navbar.scss';
 
 export default class ResponsiveNavbar extends React.PureComponent {
   static propTypes = {
     id: PropTypes.string,
+    className: PropTypes.string,
     showNavItemBorder: PropTypes.bool,
     showNavItemTooltip: PropTypes.bool,
     tooltipDelay: PropTypes.number,
@@ -28,12 +27,13 @@ export default class ResponsiveNavbar extends React.PureComponent {
     })).isRequired,
     onSelect: PropTypes.func,
     height: PropTypes.string,
-    initialUpdateDelay: PropTypes.number,
+    componentRight: PropTypes.node,
   }
 
   static defaultProps = {
-    id: null,
-    onSelect: null,
+    id: 'responsive-navbar',
+    className: '',
+    onSelect: () => {},
     showNavItemBorder: false,
     showNavItemTooltip: true,
     tooltipDelay: 2000,
@@ -41,57 +41,50 @@ export default class ResponsiveNavbar extends React.PureComponent {
     fontWeight: 'inherit',
     placeholder: 'more...',
     height: '40px',
-    initialUpdateDelay: 200,
+    componentRight: null,
+  }
+
+  constructor(props) {
+    super(props);
+    this.itemWidths = []; // store item widths here, they don't change
   }
 
   state = {
-    updateDimenssions: false,
-    lastVisibleItemIndex: -1,
-    lastWidth: 0,
+    isSelectVisible: false,
+    lastVisibleItemIndex: -2,
   };
 
   componentDidMount() {
-    window.addEventListener('resize', this.handleResizeEvent);
-    window.addEventListener('orientationchange', this.handleResizeEvent); // for mobile support
-    // Component is not rendered yet by browser when DidMount is called
-    setTimeout(() => {
-      this.handleResizeEvent();
-    }, this.props.initialUpdateDelay);
+    window.addEventListener('resize', debounce(this.refreshLastVisibleItem));
+    window.addEventListener('orientationchange', this.refreshLastVisibleItem); // for mobile support
+    this.refreshLastVisibleItem();
   }
 
-  componentDidUpdate() {
-    if (this.state.updateDimenssions) {
-      this.setState({ // eslint-disable-line react/no-did-update-set-state
-        // 2nd render is triggered here in purpose
-        updateDimenssions: false,
-        lastVisibleItemIndex: this.indexOfLastVisibleNavItem(),
-      });
+  componentDidUpdate(prevProps, prevState) {
+    // Refresh visible items if values change
+    if (
+      this.state.isSelectVisible !== prevState.isSelectVisible ||
+      this.state.lastVisibleItemIndex !== prevState.lastVisibleItemIndex
+    ) {
+      this.refreshLastVisibleItem();
     }
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResizeEvent);
-    window.removeEventListener('orientationchange', this.handleResizeEvent); // for mobile support
+    window.removeEventListener('resize', debounce(this.refreshLastVisibleItem));
+    window.removeEventListener('orientationchange', this.refreshLastVisibleItem); // for mobile support
   }
 
-  getMainPartOfId = () => (this.props.id || 'responsive-navbar');
+  getLastVisibleItemIndex = () => {
+    const navBarWidth = this.navbarContainerRef ? this.navbarContainerRef.offsetWidth : 0;
+    const selectWidth = this.selectContainerRef ? this.selectContainerRef.offsetWidth : 0;
+    const componentRightWidth = this.componentRightContainerRef ? this.componentRightContainerRef.offsetWidth : 0; // eslint-disable-line
 
-  indexOfLastVisibleNavItem = () => {
-    const container = this.refs.navbarContainer;
-    const containerWidth = ReactDOM.findDOMNode(container) ?
-      ReactDOM.findDOMNode(container).offsetWidth : 0;
+    let remainingWidth = navBarWidth - selectWidth - componentRightWidth;
+    let lastVisible = 0;
 
-    let remainingWidth = containerWidth - 195;
-
-    let lastVisible = 1;
-    for (let i = 0; i < this.props.list.length - 1; i += 1) {
-      const item = this.refs[`navitemref${String(i)}`];
-      const node = ReactDOM.findDOMNode(item);
-      if (!node) {
-        break;
-      }
-      const itemWidth = node.offsetWidth;
-      remainingWidth -= itemWidth;
+    for (let i = 0; i < this.props.list.length; i += 1) {
+      remainingWidth -= this.itemWidths[i];
       if (remainingWidth < 0) {
         lastVisible -= 1;
         break;
@@ -102,18 +95,14 @@ export default class ResponsiveNavbar extends React.PureComponent {
     return lastVisible;
   }
 
-  handleResizeEvent = () => {
-    const difference = window.innerWidth - this.state.lastWidth;
-    const UPDATE_THRESHOLD = 50;
-    if (Math.abs(difference) > UPDATE_THRESHOLD) {
+  refreshLastVisibleItem = () => {
+    const lastVisibleItemIndex = this.getLastVisibleItemIndex();
+    if (this.state.lastVisibleItemIndex !== lastVisibleItemIndex) {
       this.setState({
-        updateDimenssions: true,
-        lastWidth: window.innerWidth,
+        isSelectVisible: this.props.list.length > (lastVisibleItemIndex + 1),
+        lastVisibleItemIndex,
       });
     }
-  }
-  selectionChanged = (item) => {
-    this.props.router.push(item.value);
   }
 
   tooltipWrapper = (node, index, tooltipContent) => {
@@ -124,16 +113,27 @@ export default class ResponsiveNavbar extends React.PureComponent {
     </OverlayTrigger>;
   }
 
+  // Handle react-select onChange
+  handleOnChange = ({ value }) => {
+    this.props.onSelect(value);
+  }
+
+  // Handle navbar onClick
+  handleOnClick = href => () => {
+    this.props.onSelect(href);
+  }
+
+  // Render navbar item
   navbarItem = (item, index, className) => (
     <button
-      className={index === this.props.activeKey &&
-        index <= this.state.lastVisibleItemIndex ?
-        `${className} selected-border` : `${className}`}
+      className={index === this.props.activeKey ? `${className} selected-border` : `${className}`}
       style={{ fontWeight: this.props.fontWeight, fontSize: this.props.fontSize }}
-      id={item.id || `navitemref${String(index)}`}
-      key={item.id || `navitemref${String(index)}`}
-      ref={`navitemref${String(index)}`}
-      onClick={() => { this.props.onSelect(item.href); }}
+      id={item.id || `navItem${String(index)}`}
+      key={item.id || `navitem${String(index)}`}
+      onClick={this.handleOnClick(item.href)}
+      ref={(r) => {
+        if (r && !this.itemWidths[index]) this.itemWidths[index] = r.offsetWidth;
+      }}
     >
       <span className="responsive-navbar-item-text">{item.name}</span>
     </button>
@@ -144,84 +144,105 @@ export default class ResponsiveNavbar extends React.PureComponent {
     return list.some(item => typeof (item.name) !== 'string');
   }
 
+  // Render navbar
   navbar = () => {
-    const list = this.state.lastVisibleItemIndex >= 0 ?
-      this.props.list.slice(0, this.state.lastVisibleItemIndex)
-      : this.props.list;
-    const className = this.props.showNavItemBorder ?
-      'responsive-navbar-item inactive-border' : 'responsive-navbar-item no-item-border';
-    const items = list.map((item, index) => (
-      this.tooltipWrapper(this.navbarItem(item, index, className), index, item.name)
+    const {
+      id,
+      className,
+      list,
+      showNavItemBorder,
+      height,
+    } = this.props;
+    const visibleList = this.state.lastVisibleItemIndex > -2 ?
+      list.slice(0, this.state.lastVisibleItemIndex + 1) :
+      list;
+    const itemClassName = showNavItemBorder ?
+      'responsive-navbar-item inactive-border' :
+      'responsive-navbar-item no-item-border';
+    const items = visibleList.map((item, index) => (
+      this.tooltipWrapper(this.navbarItem(item, index, itemClassName), index, item.name)
     ));
     const lineCount = this.doLineCount();
     const navbarStyle = {
-      minHeight: this.props.height,
+      minHeight: height,
     };
-    if (this.props.height.slice(-2) === 'px' && lineCount) {
-      const heightPx = parseInt(this.props.height.slice(0, -2), 10);
+    if (height.slice(-2) === 'px' && lineCount) {
+      const heightPx = parseInt(height.slice(0, -2), 10);
       navbarStyle.lineHeight = `${(heightPx - 4)}px`;
     }
     return (
       <div
-        id={`${this.getMainPartOfId()}-container`}
-        ref="navbarContainer"
-        className="responsive-navbar-container"
+        id={`${id}-container`}
+        ref={(r) => { this.navbarContainerRef = r; }}
+        className={`responsive-navbar-container ${className}`}
         style={navbarStyle}
       >
         {items}
         {this.combobox()}
+        {this.componentRight()}
       </div>
     );
   }
 
+  // Render combobox, when all items do not fit
   combobox = () => {
     const {
+      id,
       list,
-      onSelect,
       fontSize,
       activeKey,
       fontWeight,
       placeholder,
       showNavItemBorder,
     } = this.props;
-    if (this.state.lastVisibleItemIndex === -1 ||
-        this.state.lastVisibleItemIndex > list.length - 1) {
+    if (!this.state.isSelectVisible) {
       // return null if all nav items are visible
       return null;
     }
 
     // slice nav items list and show invisible items in the combobox
-    const navList = this.state.lastVisibleItemIndex >= 0 ?
-      list.slice(this.state.lastVisibleItemIndex) : list;
-    const items = navList.map((item, index) =>
-      ({
-        value: item.href,
-        label: item.name,
-        id: index,
-        ref: `navitemref${String(index)}`,
-      }));
+    const navList = this.state.lastVisibleItemIndex > -2 ?
+      list.slice(this.state.lastVisibleItemIndex + 1) : list;
+    const selectOptions = navList.map(item => ({
+      value: item.href,
+      label: item.name,
+    }));
     const lineCountNeeded = this.doLineCount();
     const customLineCount = lineCountNeeded ? 'line-count' : '';
     const customBorderClass = lineCountNeeded ? 'selected-border line-count' : 'selected-border';
     const customInactiveBorder = lineCountNeeded ? 'inactive-border line-count' : 'inactive-border';
     const inactiveBorder = showNavItemBorder ? customInactiveBorder : customLineCount;
-    const borderClass = activeKey >= this.state.lastVisibleItemIndex ? customBorderClass : inactiveBorder; // eslint-disable-line
+    const borderClass = activeKey >= (this.state.lastVisibleItemIndex + 1) ? customBorderClass : inactiveBorder; // eslint-disable-line
     const activeItem = list[activeKey];
     return (
       <div
-        id={`${this.getMainPartOfId()}-select`}
+        id={`${id}-select`}
         className={`responsive-navbar-select ${borderClass}`}
         style={{ fontWeight, fontSize }}
+        ref={(r) => { this.selectContainerRef = r; }}
       >
         <FloatingSelect
-          name="responsiveNavbarSelect"
+          name={`${id}-select-component`}
           value={activeItem ? activeItem.href : ''}
           isClearable={false}
           placeholder={placeholder}
-          options={items}
-          onChange={(item) => { onSelect(item.value); }}
-          inputId={`${this.getMainPartOfId()}-input`}
+          options={selectOptions}
+          onChange={this.handleOnChange}
         />
+      </div>
+    );
+  }
+
+  // Render custom right side component
+  componentRight = () => {
+    const { componentRight } = this.props;
+    if (!componentRight) return null;
+    return (
+      <div
+        className="responsive-navbar-container-right"
+        ref={(r) => { this.componentRightContainerRef = r; }}
+      >
+        { componentRight }
       </div>
     );
   }

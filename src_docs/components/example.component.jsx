@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'react-bootstrap';
 import ResponsiveNavbar from '../../src/index';
 
 // Example Custom Component
@@ -68,6 +69,13 @@ const ExamplesMapper = (exampleId) => {
         list: withComponents,
         showNavItemBorder: false,
         height: '65px',
+      };
+    }
+    case 7: {
+      return {
+        id: 'example5-responsive-navigation-bar',
+        list: defaultItems,
+        componentRight: <Button>Button</Button>,
       };
     }
     default: {

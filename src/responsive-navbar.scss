@@ -7,16 +7,17 @@ $border-bottom: 2px;
 
 .responsive-navbar-container {
   display: flex;
+  width: 100%;
   flex-direction: row;
   background-color: white;
   min-width: $select-min-width;
-  flex-grow: 1;
   color: $oc-color-primary-azure;
 
   .responsive-navbar-item {
     display: flex;
-    align-items:center;
-    border:none;
+    flex: 0 0 auto;
+    align-items: center;
+    border: none;
     background-color: transparent;
     outline: none;
 
@@ -40,26 +41,30 @@ $border-bottom: 2px;
   }
 
   .responsive-navbar-item-text {
-      overflow-x: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      margin: 0 5px 0 5px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 0 5px 0 5px;
   }
-}
 
-.responsive-navbar-select {
-  font-weight: inherit;
-  font-size: inherit;
-  height: inherit;
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  justify-content: center;
-  margin: 0;
-  min-width: $select-min-width;
-  max-width: $select-max-width;
+  .responsive-navbar-select {
+    font-weight: inherit;
+    font-size: inherit;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    margin: 0;
+    min-width: $select-min-width;
+    max-width: $select-max-width;
+  
+    .selected-border {
+      border-bottom: $border-bottom solid $oc-color-primary-orange;
+    }
+  }
 
-  .selected-border {
-    border-bottom: $border-bottom solid $oc-color-primary-orange;
+  .responsive-navbar-container-right {
+    margin-left: auto;
   }
 }
