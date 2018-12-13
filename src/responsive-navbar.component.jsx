@@ -124,20 +124,28 @@ export default class ResponsiveNavbar extends React.PureComponent {
   }
 
   // Render navbar item
-  navbarItem = (item, index, className) => (
-    <button
-      className={index === this.props.activeKey ? `${className} selected-border` : `${className}`}
-      style={{ fontWeight: this.props.fontWeight, fontSize: this.props.fontSize }}
-      id={item.id || `navItem${String(index)}`}
-      key={item.id || `navitem${String(index)}`}
-      onClick={this.handleOnClick(item.href)}
-      ref={(r) => {
-        if (r && !this.itemWidths[index]) this.itemWidths[index] = r.offsetWidth;
-      }}
-    >
-      <span className="responsive-navbar-item-text">{item.name}</span>
-    </button>
-  )
+  navbarItem = (item, index, className) => {
+    const {
+      activeKey,
+      fontWeight,
+      fontSize,
+      height,
+    } = this.props;
+    return (
+      <button
+        className={index === activeKey ? `${className} selected-border` : `${className}`}
+        style={{ fontWeight, fontSize, minHeight: height }}
+        id={item.id || `navItem${String(index)}`}
+        key={item.id || `navitem${String(index)}`}
+        onClick={this.handleOnClick(item.href)}
+        ref={(r) => {
+          if (r && !this.itemWidths[index]) this.itemWidths[index] = r.offsetWidth;
+        }}
+      >
+        <span className="responsive-navbar-item-text">{item.name}</span>
+      </button>
+    );
+  }
 
   doLineCount = () => {
     const { list } = this.props;
