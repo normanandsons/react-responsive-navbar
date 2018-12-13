@@ -4,6 +4,12 @@
 
 ## next
 
+## 3.2.2
+* Fix navbar item height on IE
+
+## 3.2.1
+* Fix publish
+
 ## 3.2.0
 * Add `componentRight` prop for custom component at right
 * Add `className` prop for styled-components compability
