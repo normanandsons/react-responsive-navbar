@@ -1,7 +1,7 @@
 {
   "author": "OpusCapita (www.opuscapita.com)",
   "name": "@opuscapita/react-responsive-navbar",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "private": false,
   "license": "MIT",
   "description": "OpusCapita responsive navbar",
