@@ -75,7 +75,8 @@ const ExamplesMapper = (exampleId) => {
       return {
         id: 'example5-responsive-navigation-bar',
         list: defaultItems,
-        componentRight: <Button>Button</Button>,
+        componentLeft: <Button style={{ marginTop: '4px' }}>Left</Button>,
+        componentRight: <Button style={{ marginTop: '4px' }}>Right</Button>,
       };
     }
     default: {
