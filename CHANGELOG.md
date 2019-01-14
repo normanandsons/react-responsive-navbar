@@ -4,6 +4,10 @@
 
 ## next
 
+## 3.3.0
+* Add `componentLeft` prop for custom component aligned to left
+* Upgrade packages
+
 ## 3.2.2
 * Fix navbar item height on IE
 

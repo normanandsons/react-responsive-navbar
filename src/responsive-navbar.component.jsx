@@ -27,6 +27,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
     })).isRequired,
     onSelect: PropTypes.func,
     height: PropTypes.string,
+    componentLeft: PropTypes.node,
     componentRight: PropTypes.node,
   }
 
@@ -41,6 +42,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
     fontWeight: 'inherit',
     placeholder: 'more...',
     height: '40px',
+    componentLeft: null,
     componentRight: null,
   }
 
@@ -78,9 +80,10 @@ export default class ResponsiveNavbar extends React.PureComponent {
   getLastVisibleItemIndex = () => {
     const navBarWidth = this.navbarContainerRef ? this.navbarContainerRef.offsetWidth : 0;
     const selectWidth = this.selectContainerRef ? this.selectContainerRef.offsetWidth : 0;
+    const componentLeftWidth = this.componentLeftContainerRef ? this.componentLeftContainerRef.offsetWidth : 0; // eslint-disable-line
     const componentRightWidth = this.componentRightContainerRef ? this.componentRightContainerRef.offsetWidth : 0; // eslint-disable-line
 
-    let remainingWidth = navBarWidth - selectWidth - componentRightWidth;
+    let remainingWidth = navBarWidth - selectWidth - componentLeftWidth - componentRightWidth;
     let lastVisible = 0;
 
     for (let i = 0; i < this.props.list.length; i += 1) {
@@ -187,6 +190,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
       >
         {items}
         {this.combobox()}
+        {this.componentLeft()}
         {this.componentRight()}
       </div>
     );
@@ -237,6 +241,20 @@ export default class ResponsiveNavbar extends React.PureComponent {
           options={selectOptions}
           onChange={this.handleOnChange}
         />
+      </div>
+    );
+  }
+
+  // Render custom left side component
+  componentLeft = () => {
+    const { componentLeft } = this.props;
+    if (!componentLeft) return null;
+    return (
+      <div
+        className="responsive-navbar-container-left"
+        ref={(r) => { this.componentLeftContainerRef = r; }}
+      >
+        { componentLeft }
       </div>
     );
   }

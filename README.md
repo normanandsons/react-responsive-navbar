@@ -36,6 +36,8 @@ Also you need to configure sass loader, since all the styles are in sass format.
 | height             | string                       | 40px                | override for height                         |
 | height             | string                       | 40px                | override for height                         |
 | onSelect           | function                     |                     | Callback fired when the active item changes |
+| componentLeft      | node                         |                     | Custom component aligned to left            |
+| componentRight     | node                         |                     | Custom component aligned to right           |
 
 ### Code example
 ```jsx
