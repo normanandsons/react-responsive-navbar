@@ -4,6 +4,9 @@
 
 ## next
 
+## 3.3.1
+* Upgrade `@opuscapita/react-floating-select` and other packages
+
 ## 3.3.0
 * Add `componentLeft` prop for custom component aligned to left
 * Upgrade packages
