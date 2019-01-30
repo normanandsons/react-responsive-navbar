@@ -4,6 +4,9 @@
 
 ## next
 
+## 3.3.2
+* Upgrade `@opuscapita/react-floating-select`
+
 ## 3.3.1
 * Upgrade `@opuscapita/react-floating-select` and other packages
 
