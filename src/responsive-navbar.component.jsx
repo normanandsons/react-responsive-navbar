@@ -57,7 +57,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
   };
 
   componentDidMount() {
-    window.addEventListener('resize', debounce(this.refreshLastVisibleItem));
+    window.addEventListener('resize', this.handleResize);
     window.addEventListener('orientationchange', this.refreshLastVisibleItem); // for mobile support
     this.refreshLastVisibleItem();
   }
@@ -73,7 +73,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', debounce(this.refreshLastVisibleItem));
+    window.removeEventListener('resize', this.handleResize);
     window.removeEventListener('orientationchange', this.refreshLastVisibleItem); // for mobile support
   }
 
@@ -97,6 +97,8 @@ export default class ResponsiveNavbar extends React.PureComponent {
 
     return lastVisible;
   }
+
+  handleResize = () => debounce(this.refreshLastVisibleItem);
 
   refreshLastVisibleItem = () => {
     const lastVisibleItemIndex = this.getLastVisibleItemIndex();

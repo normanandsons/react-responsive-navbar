@@ -3,7 +3,8 @@
 * In general follow (https://docs.npmjs.com/getting-started/semantic-versioning) versioning.
 
 ## next
-* Added Storybook support 
+* Fixed event listener removal
+* Added Storybook support
 
 ## 3.3.2
 * Upgrade `@opuscapita/react-floating-select`
