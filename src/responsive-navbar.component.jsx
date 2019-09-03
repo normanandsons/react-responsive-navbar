@@ -17,7 +17,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
     fontSize: PropTypes.string,
     fontWeight: PropTypes.string,
     placeholder: PropTypes.string,
-    activeKey: PropTypes.number.isRequired,
+    activeKey: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.number]).isRequired,
     list: PropTypes.arrayOf(PropTypes.shape({
       name: PropTypes.oneOfType([
         PropTypes.string,
@@ -98,7 +98,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
     return lastVisible;
   }
 
-  handleResize = () => debounce(this.refreshLastVisibleItem);
+  handleResize = () => debounce(this.refreshLastVisibleItem(), 300);
 
   refreshLastVisibleItem = () => {
     const lastVisibleItemIndex = this.getLastVisibleItemIndex();
@@ -119,7 +119,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
   }
 
   // Handle react-select onChange
-  handleOnChange = ({ value }) => {
+  handleOnChange = (value) => {
     this.props.onSelect(value);
   }
 
@@ -136,9 +136,15 @@ export default class ResponsiveNavbar extends React.PureComponent {
       fontSize,
       height,
     } = this.props;
+
+    // resolve activeKeyIndex
+    let activeKeyIndex = activeKey;
+    if (typeof activeKey === 'object') {
+      activeKeyIndex = this.activeItemIndex(activeKey);
+    }
     return (
       <button
-        className={index === activeKey ? `${className} selected-border` : `${className}`}
+        className={index === activeKeyIndex ? `${className} selected-border` : `${className}`}
         style={{ fontWeight, fontSize, minHeight: height }}
         id={item.id || `navItem${String(index)}`}
         key={item.id || `navitem${String(index)}`}
@@ -198,13 +204,27 @@ export default class ResponsiveNavbar extends React.PureComponent {
     );
   }
 
+  resolveActiveItemFromOptions = selectOptions => {
+    const { activeKey } = this.props;
+    let activeItem = selectOptions.find(opts => opts.value === activeKey);
+    if (!activeItem) {
+      activeItem = selectOptions.find(opts => opts.value === activeKey.value);
+    }
+    return activeItem;
+  }
+
+  activeItemIndex = (activeItem) => {
+    const { list } = this.props;
+    if (!activeItem) return null;
+    return list.findIndex(item => item.href === activeItem.value);
+  }
+
   // Render combobox, when all items do not fit
   combobox = () => {
     const {
       id,
       list,
       fontSize,
-      activeKey,
       fontWeight,
       placeholder,
       showNavItemBorder,
@@ -226,8 +246,11 @@ export default class ResponsiveNavbar extends React.PureComponent {
     const customBorderClass = lineCountNeeded ? 'selected-border line-count' : 'selected-border';
     const customInactiveBorder = lineCountNeeded ? 'inactive-border line-count' : 'inactive-border';
     const inactiveBorder = showNavItemBorder ? customInactiveBorder : customLineCount;
-    const borderClass = activeKey >= (this.state.lastVisibleItemIndex + 1) ? customBorderClass : inactiveBorder; // eslint-disable-line
-    const activeItem = list[activeKey];
+    // Resolve activeItem
+    const activeItem = this.resolveActiveItemFromOptions(selectOptions);
+    const activeItemIndex = this.activeItemIndex(activeItem);
+    const borderClass = activeItemIndex >= (this.state.lastVisibleItemIndex + 1) ? customBorderClass : inactiveBorder; // eslint-disable-line
+
     return (
       <div
         id={`${id}-select`}
@@ -237,7 +260,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
       >
         <FloatingSelect
           name={`${id}-select-component`}
-          value={activeItem ? activeItem.href : ''}
+          value={activeItem || ''}
           isClearable={false}
           placeholder={placeholder}
           options={selectOptions}
