@@ -204,7 +204,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
     );
   }
 
-  resolveActiveItemFromOptions = selectOptions => {
+  resolveActiveItemFromOptions = (selectOptions) => {
     const { activeKey } = this.props;
     let activeItem = selectOptions.find(opts => opts.value === activeKey);
     if (!activeItem) {
