@@ -4,6 +4,11 @@
 
 ## next
 
+## 3.3.4
+* Fixed debounce so that calculation of visible items works better
+* Fixed dropdown selection highlighting border
+* Added possibility to provide PropTypes.shape({}) or PropTypes.number for activeKey prop.
+
 ## 3.3.3
 * Fixed event listener removal
 * Added Storybook support
