@@ -25,7 +25,7 @@ Also you need to configure sass loader, since all the styles are in sass format.
 | ------------------ | ---------------------------- | ------------------- | ------------------------------------------- |
 | id                 | string                       | 'responsive-navbar' | Custom ID prefix                            |
 | className          | string                       |                     | Custon className                            |
-| activeKey          | number                       | required            | Navbar item to be active initially          |
+| activeKey          | number || object             | required            | Navbar item to be active initially          |
 | list               | array of object (name, href) | required            | List of navbar items                        |
 | showNavItemBorder  | boolean                      | false               | show bottom-border below navbar items       |
 | showNavItemTooltip | boolean                      | true                | enables tooltips for nav items              |
