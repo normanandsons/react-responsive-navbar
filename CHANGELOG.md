@@ -3,6 +3,7 @@
 * In general follow (https://docs.npmjs.com/getting-started/semantic-versioning) versioning.
 
 ## next
+* Upgraded react and `@opuscapita/react-floating-select` versions
 
 ## 3.3.4
 * Fixed debounce so that calculation of visible items works better
