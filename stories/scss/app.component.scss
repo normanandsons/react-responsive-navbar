@@ -1,13 +1,5 @@
-@import '~@opuscapita/oc-cm-common-styles/styles/app',
-'~@opuscapita/oc-cm-common-styles/styles/mixins',
-'~@opuscapita/oc-cm-common-styles/styles/bootstrap_v3_custom',
-'~@opuscapita/oc-cm-common-styles/styles/bootstrap_v3_overrides',
-'~@opuscapita/oc-cm-common-styles/styles/bootstrap_v3_without_icons',
-'~@opuscapita/oc-cm-common-styles/styles/buttons',
-'~@opuscapita/oc-cm-common-styles/styles/colors',
-'~@opuscapita/oc-cm-common-styles/styles/icons',
-'~@opuscapita/oc-cm-common-styles/styles/inputs',
-'~@opuscapita/oc-cm-common-styles/styles/variables';
+@import url("https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+@import "src/responsive-navbar";
 
 .demo-component {
   background: #f0f0f0;
