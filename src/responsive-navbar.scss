@@ -5,7 +5,8 @@
   --ess-tab-icon-color: #00000020;
   --ess-tab-icon-color-active: black;
   --ess-tab-container-min-width: 200px;
-  --ess-tab-collapse-min-width: 200px;
+  --ess-tab-dropdown-trigger-width: 24px;
+  --ess-tab-dropdown-min-width: 110px;
   --ess-tab-border-radius: 2px;
   --ess-tab-font-size: 11px;
 }
@@ -86,8 +87,30 @@
     align-content: center;
     justify-content: center;
     margin: 0;
-    min-width: var(--ess-tab-collapse-min-width);
-    max-width: var(--ess-tab-collapse-min-width);;
+    min-width: var(--ess-tab-dropdown-trigger-width);
+    max-width: var(--ess-tab-dropdown-trigger-width);
+    position: relative;
+    .dropdown-options {
+      position: absolute;
+      max-height: 200px;
+      overflow-y: auto;
+      right: 0;
+      top: 20px;
+      min-width: var(--ess-tab-dropdown-min-width);
+      .dropdown-option {
+        overflow-x: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin: 0 5px 0 0px;
+        padding: 3px 11px;
+        border-radius: var(--ess-tab-border-radius);
+        background: var(--ess-tab-background);
+        color: var(--ess-text-primary);
+        font-size: var(--ess-tab-font-size);
+        position: relative;
+        margin-top: 2px;
+      }
+    }
   }
 
   .responsive-navbar-container-left {

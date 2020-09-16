@@ -5,7 +5,7 @@
   --ess-tab-icon-color: #00000020;
   --ess-tab-icon-color-active: black;
   --ess-tab-container-min-width: 200px;
-  --ess-tab-collapse-min-width: 200px;
+  --ess-tab-dropdown-min-width: 200px;
   --ess-tab-border-radius: 2px;
   --ess-tab-font-size: 11px;
 }
@@ -82,8 +82,8 @@
     align-content: center;
     justify-content: center;
     margin: 0;
-    min-width: var(--ess-tab-collapse-min-width);
-    max-width: var(--ess-tab-collapse-min-width);;
+    min-width: var(--ess-tab-dropdown-min-width);
+    max-width: var(--ess-tab-dropdown-min-width);;
   }
 
   .responsive-navbar-container-left {

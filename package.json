@@ -105,6 +105,7 @@
   "dependencies": {
     "@opuscapita/react-floating-select": "4.0.0",
     "debounce": "1.2.0",
+    "react-drag-reorder": "1.0.0",
     "react-icons": "2.2.7"
   },
   "repository": {

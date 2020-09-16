@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { FloatingSelect } from '@opuscapita/react-floating-select';
 import { debounce } from 'debounce';
-
-// import './responsive-navbar.scss';
+import DropDown from './dropdown';
 
 export default class ResponsiveNavbar extends React.PureComponent {
   static propTypes = {
     id: PropTypes.string,
     allowClose: PropTypes.bool,
     onClose: PropTypes.func,
+    allowReorder: PropTypes.bool,
     navRenderer: PropTypes.func,
     className: PropTypes.string,
     showNavItemBorder: PropTypes.bool,
@@ -37,6 +37,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
     onSelect: () => {},
     onClose: () => {},
     allowClose: false,
+    allowReorder: false,
     showNavItemBorder: false,
     fontSize: 'inherit',
     fontWeight: 'inherit',
@@ -52,6 +53,8 @@ export default class ResponsiveNavbar extends React.PureComponent {
   }
 
   state = {
+    dragFrom: null,
+    dragTo: null,
     isSelectVisible: false,
     lastVisibleItemIndex: -2,
   };
@@ -107,19 +110,45 @@ export default class ResponsiveNavbar extends React.PureComponent {
     }
   };
 
-  // Handle react-select onChange
-  handleOnChange = (value) => {
-    this.props.onSelect(value);
+  // Handle navbar onClick
+  handleOnClick = (href, index) => {
+    this.props.onSelect(href, index);
   };
 
-  // Handle navbar onClick
-  handleOnClick = (href, index) => () => {
-    this.props.onSelect(href, index);
+  dragStart = (index) => {
+    this.setState({
+      dragFrom: index,
+    });
+  };
+
+  dragEnter = (index) => {
+    this.setState({
+      dragTo: index,
+    });
+  };
+
+  dragDrop = () => {
+    if (this.props.onReorder) {
+      const { dragFrom, dragTo } = this.state;
+      const newList = this.props.list.slice();
+      const moved = newList[dragFrom];
+
+      newList.splice(dragFrom, 1);
+      newList.splice(dragTo, 0, moved);
+
+      this.props.onReorder(newList, dragFrom, dragTo);
+      this.props.onSelect(moved, dragTo);
+
+      this.setState({
+        dragTo: null,
+        dragFrom: null,
+      });
+    }
   };
 
   // Render navbar item
   navbarItem = (item, index, className) => {
-    const { activeKey, fontWeight, fontSize, height, allowClose, onClose, navRenderer } = this.props;
+    const { activeKey, fontWeight, fontSize, height, allowClose, onClose, navRenderer, allowReorder } = this.props;
 
     if (navRenderer) {
       return navRenderer(item, index, className, activeKey === index);
@@ -130,13 +159,29 @@ export default class ResponsiveNavbar extends React.PureComponent {
     if (typeof activeKey === 'object') {
       activeKeyIndex = this.activeItemIndex(activeKey);
     }
+
+    const buttonClass = classnames(className, 'grabbable', {
+      selected: index === activeKeyIndex,
+      'with-close': allowClose,
+    });
+
+    const dragOptions = allowReorder
+      ? {
+          onDragStart: () => this.dragStart(index),
+          onDragEnter: () => this.dragEnter(index),
+          onDragEnd: this.dragDrop,
+          draggable: true,
+        }
+      : {};
+
     return (
       <button
-        className={classnames(className, { selected: index === activeKeyIndex, 'with-close': allowClose})}
+        {...dragOptions}
+        className={buttonClass}
         style={{ fontWeight, fontSize, minHeight: height }}
         id={item.id || `navItem${String(index)}`}
-        key={item.id || `navitem${String(index)}`}
-        onClick={this.handleOnClick(item.href, index)}
+        key={item.href || `navitem${String(index)}`}
+        onClick={() => this.handleOnClick(item.href, index)}
         ref={(r) => {
           if (r && !this.itemWidths[index]) this.itemWidths[index] = r.offsetWidth;
         }}
@@ -146,7 +191,6 @@ export default class ResponsiveNavbar extends React.PureComponent {
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
           {allowClose && <i tabIndex={index + 1} role="button" className="fa fa-times" onClick={() => onClose(item.href, index)} />}
         </span>
-
       </button>
     );
   };
@@ -173,7 +217,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
 
   // Render combobox, when all items do not fit
   combobox = () => {
-    const { id, list, fontSize, fontWeight, placeholder, showNavItemBorder } = this.props;
+    const { id, list, fontSize, fontWeight, placeholder, showNavItemBorder, allowReorder } = this.props;
     if (!this.state.isSelectVisible) {
       // return null if all nav items are visible
       return null;
@@ -181,10 +225,23 @@ export default class ResponsiveNavbar extends React.PureComponent {
 
     // slice nav items list and show invisible items in the combobox
     const navList = this.state.lastVisibleItemIndex > -2 ? list.slice(this.state.lastVisibleItemIndex + 1) : list;
-    const selectOptions = navList.map((item) => ({
-      value: item.href,
-      label: item.name,
-    }));
+    const selectOptions = navList.map((item, index) => {
+      const realIndex = index + this.state.lastVisibleItemIndex + 1;
+      const dragOptions = allowReorder ? {
+        onDragStart: () => this.dragStart(realIndex),
+        onDragEnter: () => this.dragEnter(realIndex),
+        onDragEnd: this.dragDrop,
+        draggable: true,
+        className: classnames('dropdown-option', {'is-selected': false}),
+        onClick: () => this.handleOnClick(item.href, realIndex)
+      } : {};
+      return {
+        value: item.href,
+        label: item.name,
+        options: dragOptions
+      };
+    });
+
     const lineCountNeeded = this.doLineCount();
     const customLineCount = lineCountNeeded ? 'line-count' : '';
     const customBorderClass = lineCountNeeded ? 'selected line-count' : 'selected';
@@ -204,14 +261,15 @@ export default class ResponsiveNavbar extends React.PureComponent {
           this.selectContainerRef = r;
         }}
       >
-        <FloatingSelect
-          name={`${id}-select-component`}
-          value={activeItem || ''}
-          isClearable={false}
-          placeholder={placeholder}
-          options={selectOptions}
-          onChange={this.handleOnChange}
-        />
+        {/*<FloatingSelect*/}
+        {/*  name={`${id}-select-component`}*/}
+        {/*  value={activeItem || ''}*/}
+        {/*  isClearable={false}*/}
+        {/*  placeholder={placeholder}*/}
+        {/*  options={selectOptions}*/}
+        {/*  onChange={this.handleOnChange}*/}
+        {/*/>*/}
+        <DropDown value={activeItem || ''} options={selectOptions} />
       </div>
     );
   };
@@ -256,7 +314,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
     const lineCount = this.doLineCount();
     const navbarStyle = {
       minHeight: height,
-      maxHeight: height
+      maxHeight: height,
     };
     if (height.slice(-2) === 'px' && lineCount) {
       const heightPx = parseInt(height.slice(0, -2), 10);
