@@ -412,10 +412,11 @@ const list = [
 ];
 
 const store = new Store({ activeKey: 0, list });
+
 storiesOf('@opuscapita/react-responsive-navbar', module)
   .addDecorator(StateDecorator(store))
   .add('React Responsive NavBar', () => (state) => {
-    const onItemClick = (href, index) => {
+    const onItemClick = (id, index) => {
       store.set({ activeKey: index });
     };
 
@@ -425,12 +426,12 @@ storiesOf('@opuscapita/react-responsive-navbar', module)
       });
     };
 
-    const onItemClosed = index => {
-      list.splice(index, 1);
-      let active = (state.activeKey === index) ? Math.abs(activeKey - 1) : activeKey;
+    const onItemClosed = (href) => {
+      let activeKey = list.findIndex(opts => opts.href === href);
+      if (activeKey !== -1) list.splice(activeKey, 1);
       store.set({
         list,
-        activeKey: active
+        activeKey: activeKey === state.activeKey ? Math.abs(state.activeKey - 1) : state.activeKey
       })
     }
 

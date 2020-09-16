@@ -2,7 +2,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { FloatingSelect } from '@opuscapita/react-floating-select';
 import { debounce } from 'debounce';
 import DropDown from './dropdown';
 
@@ -115,6 +114,12 @@ export default class ResponsiveNavbar extends React.PureComponent {
     this.props.onSelect(href, index);
   };
 
+  handleClose = (event, href, index, item) => {
+    // don't bubble to click also, we got rid of this
+    event.stopPropagation();
+    this.props.onClose(href, index);
+  };
+
   dragStart = (index) => {
     this.setState({
       dragFrom: index,
@@ -148,7 +153,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
 
   // Render navbar item
   navbarItem = (item, index, className) => {
-    const { activeKey, fontWeight, fontSize, height, allowClose, onClose, navRenderer, allowReorder } = this.props;
+    const { activeKey, fontWeight, fontSize, height, allowClose, navRenderer, allowReorder } = this.props;
 
     if (navRenderer) {
       return navRenderer(item, index, className, activeKey === index);
@@ -189,7 +194,7 @@ export default class ResponsiveNavbar extends React.PureComponent {
         <span className="responsive-navbar-item-text">
           {item.name}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-          {allowClose && <i tabIndex={index + 1} role="button" className="fa fa-times" onClick={() => onClose(item.href, index)} />}
+          {allowClose && <i tabIndex={index + 1} role="button" className="fa fa-times" onClick={(event) => this.handleClose(event, item.href, index)} />}
         </span>
       </button>
     );
@@ -227,18 +232,20 @@ export default class ResponsiveNavbar extends React.PureComponent {
     const navList = this.state.lastVisibleItemIndex > -2 ? list.slice(this.state.lastVisibleItemIndex + 1) : list;
     const selectOptions = navList.map((item, index) => {
       const realIndex = index + this.state.lastVisibleItemIndex + 1;
-      const dragOptions = allowReorder ? {
-        onDragStart: () => this.dragStart(realIndex),
-        onDragEnter: () => this.dragEnter(realIndex),
-        onDragEnd: this.dragDrop,
-        draggable: true,
-        className: classnames('dropdown-option', {'is-selected': false}),
-        onClick: () => this.handleOnClick(item.href, realIndex)
-      } : {};
+      const dragOptions = allowReorder
+        ? {
+            onDragStart: () => this.dragStart(realIndex),
+            onDragEnter: () => this.dragEnter(realIndex),
+            onDragEnd: this.dragDrop,
+            draggable: true,
+            className: classnames('dropdown-option', { 'is-selected': false }),
+            onClick: () => this.handleOnClick(item.href, realIndex),
+          }
+        : {};
       return {
         value: item.href,
         label: item.name,
-        options: dragOptions
+        options: dragOptions,
       };
     });
 

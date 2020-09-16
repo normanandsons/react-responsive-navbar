@@ -9,6 +9,8 @@
   --ess-tab-dropdown-min-width: 110px;
   --ess-tab-border-radius: 2px;
   --ess-tab-font-size: 11px;
+  --ess-menu-border: #00000020;
+  --ess-menu-shadow: 1px 1px 1px rgba(0, 0, 0, .1);
 }
 :root[theme=dark] {
   --ess-text-primary: white;
@@ -97,18 +99,22 @@
       right: 0;
       top: 20px;
       min-width: var(--ess-tab-dropdown-min-width);
+      border-radius: var(--ess-tab-border-radius);
+      border: 1px solid var(--ess-menu-border);
+      box-shadow: var(--ess-menu-shadow);
       .dropdown-option {
         overflow-x: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        margin: 0 5px 0 0px;
+        margin-top: 2px;
+        margin-left: 2px;
+        margin-right: 2px;
         padding: 3px 11px;
         border-radius: var(--ess-tab-border-radius);
         background: var(--ess-tab-background);
         color: var(--ess-text-primary);
         font-size: var(--ess-tab-font-size);
         position: relative;
-        margin-top: 2px;
       }
     }
   }
