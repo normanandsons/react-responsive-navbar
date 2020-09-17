@@ -5,417 +5,314 @@ import { Store, StateDecorator } from '@sambego/storybook-state';
 
 // Application
 import './scss/app.component.scss';
-import NavBar from '../src/responsive-navbar.component';
+import NavBar from '../src/responsive-tab-pills';
 /* eslint-disable no-alert */
 /* eslint-disable no-console */
 const list = [
   {
-    name: 'A',
-    href: 0,
+    "name": "A",
+    "id": "A"
   },
   {
-    name: 'AAL',
-    href: 1,
+    "name": "AAL",
+    "id": "AAL"
   },
   {
-    name: 'AAP',
-    href: 2,
+    "name": "AAP",
+    "id": "AAP"
   },
   {
-    name: 'AAPL',
-    href: 3,
+    "name": "AAPL",
+    "id": "AAPL"
   },
   {
-    name: 'ABBV',
-    href: 4,
+    "name": "ABBV",
+    "id": "ABBV"
   },
   {
-    name: 'ABC',
-    href: 5,
+    "name": "ABC",
+    "id": "ABC"
   },
   {
-    name: 'ABMD',
-    href: 6,
+    "name": "ABMD",
+    "id": "ABMD"
   },
   {
-    name: 'ABT',
-    href: 7,
+    "name": "ABT",
+    "id": "ABT"
   },
   {
-    name: 'ACN',
-    href: 8,
+    "name": "ACN",
+    "id": "ACN"
   },
   {
-    name: 'ADBE',
-    href: 9,
+    "name": "ADBE",
+    "id": "ADBE"
   },
   {
-    name: 'ADI',
-    href: 10,
+    "name": "ADI",
+    "id": "ADI"
   },
   {
-    name: 'ADM',
-    href: 11,
+    "name": "ADM",
+    "id": "ADM"
   },
   {
-    name: 'ADP',
-    href: 12,
+    "name": "ADP",
+    "id": "ADP"
   },
   {
-    name: 'ADS',
-    href: 13,
+    "name": "ADS",
+    "id": "ADS"
   },
   {
-    name: 'ADSK',
-    href: 14,
+    "name": "ADSK",
+    "id": "ADSK"
   },
   {
-    name: 'AEE',
-    href: 15,
+    "name": "AEE",
+    "id": "AEE"
   },
   {
-    name: 'AEP',
-    href: 16,
+    "name": "AEP",
+    "id": "AEP"
   },
   {
-    name: 'AES',
-    href: 17,
+    "name": "AES",
+    "id": "AES"
   },
   {
-    name: 'AFL',
-    href: 18,
+    "name": "AFL",
+    "id": "AFL"
   },
   {
-    name: 'AGN',
-    href: 19,
+    "name": "AGN",
+    "id": "AGN"
   },
   {
-    name: 'AIG',
-    href: 20,
+    "name": "AIG",
+    "id": "AIG"
   },
   {
-    name: 'AIV',
-    href: 21,
+    "name": "AIV",
+    "id": "AIV"
   },
   {
-    name: 'AIZ',
-    href: 22,
+    "name": "AIZ",
+    "id": "AIZ"
   },
   {
-    name: 'AJG',
-    href: 23,
+    "name": "AJG",
+    "id": "AJG"
   },
   {
-    name: 'AKAM',
-    href: 24,
+    "name": "AKAM",
+    "id": "AKAM"
   },
   {
-    name: 'ALB',
-    href: 25,
+    "name": "ALB",
+    "id": "ALB"
   },
   {
-    name: 'ALGN',
-    href: 26,
+    "name": "ALGN",
+    "id": "ALGN"
   },
   {
-    name: 'ALK',
-    href: 27,
+    "name": "ALK",
+    "id": "ALK"
   },
   {
-    name: 'ALL',
-    href: 28,
+    "name": "ALL",
+    "id": "ALL"
   },
   {
-    name: 'ALLE',
-    href: 29,
+    "name": "ALLE",
+    "id": "ALLE"
   },
   {
-    name: 'ALXN',
-    href: 30,
+    "name": "ALXN",
+    "id": "ALXN"
   },
   {
-    name: 'AMAT',
-    href: 31,
+    "name": "AMAT",
+    "id": "AMAT"
   },
   {
-    name: 'AMCR',
-    href: 32,
+    "name": "AMCR",
+    "id": "AMCR"
   },
   {
-    name: 'AMD',
-    href: 33,
+    "name": "AMD",
+    "id": "AMD"
   },
   {
-    name: 'AME',
-    href: 34,
+    "name": "AME",
+    "id": "AME"
   },
   {
-    name: 'AMGN',
-    href: 35,
+    "name": "AMGN",
+    "id": "AMGN"
   },
   {
-    name: 'AMP',
-    href: 36,
+    "name": "AMP",
+    "id": "AMP"
   },
   {
-    name: 'AMT',
-    href: 37,
+    "name": "AMT",
+    "id": "AMT"
   },
   {
-    name: 'AMZN',
-    href: 38,
+    "name": "AMZN",
+    "id": "AMZN"
   },
   {
-    name: 'ANET',
-    href: 39,
+    "name": "ANET",
+    "id": "ANET"
   },
   {
-    name: 'ANSS',
-    href: 40,
+    "name": "ANSS",
+    "id": "ANSS"
   },
   {
-    name: 'ANTM',
-    href: 41,
+    "name": "ANTM",
+    "id": "ANTM"
   },
   {
-    name: 'AON',
-    href: 42,
+    "name": "AON",
+    "id": "AON"
   },
   {
-    name: 'AOS',
-    href: 43,
+    "name": "AOS",
+    "id": "AOS"
   },
   {
-    name: 'APA',
-    href: 44,
+    "name": "APA",
+    "id": "APA"
   },
   {
-    name: 'APD',
-    href: 45,
+    "name": "APD",
+    "id": "APD"
   },
   {
-    name: 'APH',
-    href: 46,
+    "name": "APH",
+    "id": "APH"
   },
   {
-    name: 'APTV',
-    href: 47,
+    "name": "APTV",
+    "id": "APTV"
   },
   {
-    name: 'ARE',
-    href: 48,
+    "name": "ARE",
+    "id": "ARE"
   },
   {
-    name: 'ARNC',
-    href: 49,
+    "name": "ARNC",
+    "id": "ARNC"
   },
   {
-    name: 'ATO',
-    href: 50,
+    "name": "ATO",
+    "id": "ATO"
   },
   {
-    name: 'ATVI',
-    href: 51,
+    "name": "ATVI",
+    "id": "ATVI"
   },
   {
-    name: 'AVB',
-    href: 52,
+    "name": "AVB",
+    "id": "AVB"
   },
   {
-    name: 'AVGO',
-    href: 53,
+    "name": "AVGO",
+    "id": "AVGO"
   },
   {
-    name: 'AVY',
-    href: 54,
+    "name": "AVY",
+    "id": "AVY"
   },
   {
-    name: 'AWK',
-    href: 55,
+    "name": "AWK",
+    "id": "AWK"
   },
   {
-    name: 'AXP',
-    href: 56,
+    "name": "AXP",
+    "id": "AXP"
   },
   {
-    name: 'AZO',
-    href: 57,
+    "name": "AZO",
+    "id": "AZO"
   },
   {
-    name: 'BA',
-    href: 58,
+    "name": "BA",
+    "id": "BA"
   },
   {
-    name: 'BAC',
-    href: 59,
+    "name": "BAC",
+    "id": "BAC"
   },
   {
-    name: 'BAX',
-    href: 60,
+    "name": "BAX",
+    "id": "BAX"
   },
   {
-    name: 'BBY',
-    href: 61,
+    "name": "BBY",
+    "id": "BBY"
   },
   {
-    name: 'BDX',
-    href: 62,
+    "name": "BDX",
+    "id": "BDX"
   },
   {
-    name: 'BEN',
-    href: 63,
+    "name": "BEN",
+    "id": "BEN"
   },
   {
-    name: 'BF.B',
-    href: 64,
+    "name": "BF.B",
+    "id": "BF.B"
   },
   {
-    name: 'BIIB',
-    href: 65,
+    "name": "BIIB",
+    "id": "BIIB"
   },
   {
-    name: 'BK',
-    href: 66,
+    "name": "BK",
+    "id": "BK"
   },
   {
-    name: 'BKNG',
-    href: 67,
+    "name": "BKNG",
+    "id": "BKNG"
   },
   {
-    name: 'BKR',
-    href: 68,
+    "name": "BKR",
+    "id": "BKR"
   },
   {
-    name: 'BLK',
-    href: 69,
+    "name": "BLK",
+    "id": "BLK"
   },
   {
-    name: 'BLL',
-    href: 70,
+    "name": "BLL",
+    "id": "BLL"
   },
   {
-    name: 'BMY',
-    href: 71,
+    "name": "BMY",
+    "id": "BMY"
   },
   {
-    name: 'BR',
-    href: 72,
+    "name": "BR",
+    "id": "BR"
   },
   {
-    name: 'BRK.B',
-    href: 73,
-  },
-  {
-    name: 'BSX',
-    href: 74,
-  },
-  {
-    name: 'BWA',
-    href: 75,
-  },
-  {
-    name: 'BXP',
-    href: 76,
-  },
-  {
-    name: 'C',
-    href: 77,
-  },
-  {
-    name: 'CAG',
-    href: 78,
-  },
-  {
-    name: 'CAH',
-    href: 79,
-  },
-  {
-    name: 'CAT',
-    href: 80,
-  },
-  {
-    name: 'CB',
-    href: 81,
-  },
-  {
-    name: 'CBOE',
-    href: 82,
-  },
-  {
-    name: 'CBRE',
-    href: 83,
-  },
-  {
-    name: 'CCI',
-    href: 84,
-  },
-  {
-    name: 'CCL',
-    href: 85,
-  },
-  {
-    name: 'CDNS',
-    href: 86,
-  },
-  {
-    name: 'CDW',
-    href: 87,
-  },
-  {
-    name: 'CE',
-    href: 88,
-  },
-  {
-    name: 'CERN',
-    href: 89,
-  },
-  {
-    name: 'CF',
-    href: 90,
-  },
-  {
-    name: 'CFG',
-    href: 91,
-  },
-  {
-    name: 'CHD',
-    href: 92,
-  },
-  {
-    name: 'CHRW',
-    href: 93,
-  },
-  {
-    name: 'CHTR',
-    href: 94,
-  },
-  {
-    name: 'CI',
-    href: 95,
-  },
-  {
-    name: 'CINF',
-    href: 96,
-  },
-  {
-    name: 'CL',
-    href: 97,
-  },
-  {
-    name: 'CLX',
-    href: 98,
-  },
-  {
-    name: 'CMA',
-    href: 99,
-  },
+    "name": "BRK.B",
+    "id": "BRK.B"
+  }
 ];
 
 const store = new Store({ activeKey: 0, list });
 
-storiesOf('@opuscapita/react-responsive-navbar', module)
+storiesOf('@normanandsons/react-responsive-tab-pills', module)
   .addDecorator(StateDecorator(store))
-  .add('React Responsive NavBar', () => (state) => {
+  .add('React Responsive Tab Pills', () => (state) => {
+
     const onItemClick = (id, index) => {
       store.set({ activeKey: index });
     };
@@ -426,20 +323,14 @@ storiesOf('@opuscapita/react-responsive-navbar', module)
       });
     };
 
-    const onItemClosed = (href) => {
-      let activeKey = list.findIndex(opts => opts.href === href);
+    const onItemClosed = (id) => {
+      let activeKey = list.findIndex((opts) => opts.id === id);
       if (activeKey !== -1) list.splice(activeKey, 1);
       store.set({
         list,
-        activeKey: activeKey === state.activeKey ? Math.abs(state.activeKey - 1) : state.activeKey
-      })
-    }
-
-    const showComponentLeft = boolean('Show component on left', false);
-    const showComponentRight = boolean('Show component on right', false);
-
-    const componentLeft = showComponentLeft ? <div className="demo-component">Component on left (node)</div> : null;
-    const componentRight = showComponentRight ? <div className="demo-component">Component on right (node)</div> : null;
+        activeKey: activeKey === state.activeKey ? Math.abs(state.activeKey - 1) : state.activeKey,
+      });
+    };
 
     const knobs = {
       list: object('List', state.list),
@@ -450,13 +341,10 @@ storiesOf('@opuscapita/react-responsive-navbar', module)
       onReorder: onItemReorder,
       onClose: onItemClosed,
       showNavItemBorder: boolean('Show nav item border', false),
-      showNavItemToolTip: boolean('Show nav item tooltip', true),
-      toolTipDelay: number('Tooltip delay', 2000),
       fontSize: text('Font size', 'inherit'),
       fontWeight: text('Font weight', 'inherit'),
-      placeholder: text('Placeholder', 'more...'),
       height: text('Height', '30'),
     };
 
-    return <NavBar {...knobs} componentLeft={componentLeft} componentRight={componentRight} />;
+    return <NavBar {...knobs} />;
   });

@@ -1,11 +1,10 @@
-/* eslint-disable react/no-find-dom-node */
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { debounce } from 'debounce';
 import DropDown from './dropdown';
 
-export default class ResponsiveNavbar extends React.PureComponent {
+export default class ResponsiveTabPills extends React.Component {
   static propTypes = {
     id: PropTypes.string,
     allowClose: PropTypes.bool,
@@ -13,21 +12,17 @@ export default class ResponsiveNavbar extends React.PureComponent {
     allowReorder: PropTypes.bool,
     navRenderer: PropTypes.func,
     className: PropTypes.string,
-    showNavItemBorder: PropTypes.bool,
     fontSize: PropTypes.string,
     fontWeight: PropTypes.string,
-    placeholder: PropTypes.string,
     activeKey: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.number]).isRequired,
     list: PropTypes.arrayOf(
       PropTypes.shape({
         name: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
-        href: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       })
     ).isRequired,
     onSelect: PropTypes.func,
     height: PropTypes.string,
-    componentLeft: PropTypes.node,
-    componentRight: PropTypes.node,
   };
 
   static defaultProps = {
@@ -37,7 +32,6 @@ export default class ResponsiveNavbar extends React.PureComponent {
     onClose: () => {},
     allowClose: false,
     allowReorder: false,
-    showNavItemBorder: false,
     fontSize: 'inherit',
     fontWeight: 'inherit',
     placeholder: 'more...',
@@ -109,15 +103,14 @@ export default class ResponsiveNavbar extends React.PureComponent {
     }
   };
 
-  // Handle navbar onClick
-  handleOnClick = (href, index) => {
-    this.props.onSelect(href, index);
+  handleOnClick = (id, index) => {
+    this.props.onSelect(id, index);
   };
 
-  handleClose = (event, href, index, item) => {
+  handleClose = (event, id, index) => {
     // don't bubble to click also, we got rid of this
     event.stopPropagation();
-    this.props.onClose(href, index);
+    this.props.onClose(id, index);
   };
 
   dragStart = (index) => {
@@ -126,10 +119,15 @@ export default class ResponsiveNavbar extends React.PureComponent {
     });
   };
 
-  dragEnter = (index) => {
+  dragEnter = (index, e) => {
+    e.target.classList.add('droppable');
     this.setState({
       dragTo: index,
     });
+  };
+
+  dragLeave = (index, e) => {
+    e.target.classList.remove('droppable');
   };
 
   dragDrop = () => {
@@ -172,8 +170,9 @@ export default class ResponsiveNavbar extends React.PureComponent {
 
     const dragOptions = allowReorder
       ? {
-          onDragStart: () => this.dragStart(index),
-          onDragEnter: () => this.dragEnter(index),
+          onDragStart: (e) => this.dragStart(index, e),
+          onDragEnter: (e) => this.dragEnter(index, e),
+          onDragLeave: (e) => this.dragLeave(index, e),
           onDragEnd: this.dragDrop,
           draggable: true,
         }
@@ -185,16 +184,16 @@ export default class ResponsiveNavbar extends React.PureComponent {
         className={buttonClass}
         style={{ fontWeight, fontSize, minHeight: height }}
         id={item.id || `navItem${String(index)}`}
-        key={item.href || `navitem${String(index)}`}
-        onClick={() => this.handleOnClick(item.href, index)}
+        key={item.id || `navitem${String(index)}`}
+        onClick={() => this.handleOnClick(item.id, index)}
         ref={(r) => {
           if (r && !this.itemWidths[index]) this.itemWidths[index] = r.offsetWidth;
         }}
       >
-        <span className="responsive-navbar-item-text">
+        <span className='responsive-navbar-item-text'>
           {item.name}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-          {allowClose && <i tabIndex={index + 1} role="button" className="fa fa-times" onClick={(event) => this.handleClose(event, item.href, index)} />}
+          {allowClose && <i tabIndex={index + 1} role='button' className='fa fa-times' onClick={(event) => this.handleClose(event, item.id, index)} />}
         </span>
       </button>
     );
@@ -217,12 +216,12 @@ export default class ResponsiveNavbar extends React.PureComponent {
   activeItemIndex = (activeItem) => {
     const { list } = this.props;
     if (!activeItem) return null;
-    return list.findIndex((item) => item.href === activeItem.value);
+    return list.findIndex((item) => item.id === activeItem.value);
   };
 
   // Render combobox, when all items do not fit
   combobox = () => {
-    const { id, list, fontSize, fontWeight, placeholder, showNavItemBorder, allowReorder } = this.props;
+    const { id, list, fontSize, fontWeight, allowReorder, activeKey, allowClose } = this.props;
     if (!this.state.isSelectVisible) {
       // return null if all nav items are visible
       return null;
@@ -232,28 +231,38 @@ export default class ResponsiveNavbar extends React.PureComponent {
     const navList = this.state.lastVisibleItemIndex > -2 ? list.slice(this.state.lastVisibleItemIndex + 1) : list;
     const selectOptions = navList.map((item, index) => {
       const realIndex = index + this.state.lastVisibleItemIndex + 1;
+
       const dragOptions = allowReorder
         ? {
-            onDragStart: () => this.dragStart(realIndex),
-            onDragEnter: () => this.dragEnter(realIndex),
-            onDragEnd: this.dragDrop,
-            draggable: true,
-            className: classnames('dropdown-option', { 'is-selected': false }),
-            onClick: () => this.handleOnClick(item.href, realIndex),
-          }
+          onDragStart: (e) => this.dragStart(realIndex, e),
+          onDragEnter: (e) => this.dragEnter(realIndex, e),
+          onDragLeave: (e) => this.dragLeave(index, e),
+          onDragEnd: this.dragDrop,
+          draggable: true,
+        }
         : {};
+
+      const dropdownOptions = {
+        className: classnames('dropdown-option', { selected: list[activeKey].id === item.id }),
+        close: allowClose ? (
+          <i role='button' className='fa fa-times' onClick={(event) => this.handleClose(event, item.id, realIndex)} />
+        ) : null,
+        onSelect: () => {
+          this.handleOnClick(item.id, realIndex);
+        },
+        ...dragOptions
+      };
+
+
       return {
-        value: item.href,
-        label: item.name,
-        options: dragOptions,
+        ...item,
+        options: dropdownOptions
       };
     });
 
     const lineCountNeeded = this.doLineCount();
-    const customLineCount = lineCountNeeded ? 'line-count' : '';
     const customBorderClass = lineCountNeeded ? 'selected line-count' : 'selected';
-    const customInactiveBorder = lineCountNeeded ? 'inactive line-count' : 'inactive';
-    const inactiveBorder = showNavItemBorder ? customInactiveBorder : customLineCount;
+    const inactiveBorder = lineCountNeeded ? 'inactive line-count' : 'inactive';
     // Resolve activeItem
     const activeItem = this.resolveActiveItemFromOptions(selectOptions);
     const activeItemIndex = this.activeItemIndex(activeItem);
@@ -268,55 +277,15 @@ export default class ResponsiveNavbar extends React.PureComponent {
           this.selectContainerRef = r;
         }}
       >
-        {/*<FloatingSelect*/}
-        {/*  name={`${id}-select-component`}*/}
-        {/*  value={activeItem || ''}*/}
-        {/*  isClearable={false}*/}
-        {/*  placeholder={placeholder}*/}
-        {/*  options={selectOptions}*/}
-        {/*  onChange={this.handleOnChange}*/}
-        {/*/>*/}
-        <DropDown value={activeItem || ''} options={selectOptions} />
-      </div>
-    );
-  };
-
-  // Render custom left side component
-  componentLeft = () => {
-    const { componentLeft } = this.props;
-    if (!componentLeft) return null;
-    return (
-      <div
-        className="responsive-navbar-container-left"
-        ref={(r) => {
-          this.componentLeftContainerRef = r;
-        }}
-      >
-        {componentLeft}
-      </div>
-    );
-  };
-
-  // Render custom right side component
-  componentRight = () => {
-    const { componentRight } = this.props;
-    if (!componentRight) return null;
-    return (
-      <div
-        className="responsive-navbar-container-right"
-        ref={(r) => {
-          this.componentRightContainerRef = r;
-        }}
-      >
-        {componentRight}
+        <DropDown value={list[activeKey]} options={selectOptions} />
       </div>
     );
   };
 
   render() {
-    const { id, className, list, showNavItemBorder, height } = this.props;
+    const { id, className, list, height } = this.props;
     const visibleList = this.state.lastVisibleItemIndex > -2 ? list.slice(0, this.state.lastVisibleItemIndex + 1) : list;
-    const itemClassName = showNavItemBorder ? 'responsive-navbar-item inactive-border' : 'responsive-navbar-item no-item-border';
+    const itemClassName = 'responsive-navbar-item inactive-border';
     const items = visibleList.map((item, index) => this.navbarItem(item, index, itemClassName));
     const lineCount = this.doLineCount();
     const navbarStyle = {
@@ -338,8 +307,6 @@ export default class ResponsiveNavbar extends React.PureComponent {
       >
         {items}
         {this.combobox()}
-        {this.componentLeft()}
-        {this.componentRight()}
       </div>
     );
   }

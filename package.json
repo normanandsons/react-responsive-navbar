@@ -1,11 +1,11 @@
 {
   "author": "OpusCapita (www.opuscapita.com)",
-  "name": "@normanandsons/react-responsive-navbar",
+  "name": "@normanandsons/react-responsive-tab-pills",
   "version": "3.4.0",
   "private": false,
   "license": "MIT",
   "description": "OpusCapita responsive navbar",
-  "main": "lib/umd/react-responsive-navbar.js",
+  "main": "lib/umd/react-responsive-pills.js",
   "cjs": "lib/cjs/index.js",
   "es": "lib/es/index.js",
   "scripts": {
@@ -107,10 +107,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/OpusCapita/react-responsive-navbar.git"
+    "url": "https://github.com/normanandsons/react-responsive-tab-pills.git"
   },
   "prettier": {
-    "jsxSingleQuote": false,
+    "jsxSingleQuote": true,
     "singleQuote": true,
     "printWidth": 160,
     "tabWidth": 2

@@ -15,23 +15,24 @@ class DropDown extends React.Component {
 
   handleClick = (option) => {
     this.setState({
-      open: false
+      open: false,
     });
-    option.onClick && option.onClick(option);
-  }
+    option.onSelect && option.onSelect();
+  };
 
   render() {
     return (
       <React.Fragment>
-        <a className={this.props.className} onClick={this.handleFocus} onBlur={this.handleBlur}>
+        <a className={this.props.className} onClick={this.handleFocus}>
           <i className="fa fa-caret-down" aria-hidden="true" />
         </a>
         {this.state.open ? (
           <div className={'dropdown-options'}>
             {this.props.options.map((option) => {
+              const { onSelect, close: Close, ...rest } = option.options;
               return (
-                <div key={option.label} {...option.options} onClick={() => this.handleClick(option)}>
-                  {option.label}
+                <div key={option.id} {...rest} onClick={() => this.handleClick(option.options)}>
+                  {option.name} {Close}
                 </div>
               );
             })}

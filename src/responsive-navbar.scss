@@ -2,6 +2,7 @@
   --ess-text-primary: black;
   --ess-tab-background: rgb(235, 236, 240);
   --ess-tab-background-active: rgb(210, 216, 220);
+  --ess-tab-target-background: rgb(235, 236, 240, .5);
   --ess-tab-icon-color: #00000020;
   --ess-tab-icon-color-active: black;
   --ess-tab-container-min-width: 200px;
@@ -18,6 +19,20 @@
   --ess-tab-background-active: rgb(10, 16, 20);
   --ess-tab-icon-color: #ffffff20;
   --ess-tab-icon-color-active: white;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 1px rgba(0,0,0,0.3);
+  border-radius: 0
+}
+
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 1px rgba(0,0,0,0.5);
+  color: var(--ess-tab-background);
 }
 
 .responsive-navbar-container {
@@ -42,10 +57,6 @@
       box-shadow: none;
       outline: none;
     }
-  }
-
-  .inactive {
-
   }
 
   .selected {
@@ -115,16 +126,27 @@
         color: var(--ess-text-primary);
         font-size: var(--ess-tab-font-size);
         position: relative;
+        &.selected {
+          background: var(--ess-tab-background-active);
+        }
+        i.fa {
+          position: absolute;
+          right: 4px;
+          color: var(--ess-tab-icon-color);
+        }
+        &:hover i.fa {
+          color: var(--ess-tab-icon-color-active);
+        }
       }
     }
   }
 
-  .responsive-navbar-container-left {
-    padding-left: 0;
-    margin-right: auto;
+  .droppable {
+    --ess-tab-background: var(--ess-tab-target-background)
   }
 
-  .responsive-navbar-container-right {
-    margin-left: auto;
+  .dragged {
+    opacity: .1;
   }
+
 }

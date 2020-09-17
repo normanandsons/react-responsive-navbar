@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mount } from 'enzyme';
 
-import ResponsiveNavbar from '../../src/index';
+import ResponsiveTabPills from '../../src/index';
 
 describe('Responsive navbar component', () => {
   const list = [
@@ -15,7 +15,7 @@ describe('Responsive navbar component', () => {
   it('should render navbar correctly', () => {
     const activeKey = 2;
 
-    const wrapper = mount(<ResponsiveNavbar
+    const wrapper = mount(<ResponsiveTabPills
       activeKey={activeKey}
       list={list}
       router={[]}

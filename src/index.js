@@ -1,3 +1,3 @@
-import ResponsiveNavbar from './responsive-navbar.component';
+import ResponsiveTabPills from './responsive-tab-pills';
 
-export default ResponsiveNavbar;
+export default ResponsiveTabPills;

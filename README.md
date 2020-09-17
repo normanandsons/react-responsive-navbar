@@ -1,15 +1,15 @@
-# react-responsive-navbar
+# react-responsive-tab-pills
 
 ### Description
 Navbar component that moves the navbar items to a dropdown, if they do not fit in the content area.
 
 ### Installation
 ```
-npm install @opuscapita/react-responsive-navbar
+npm install @normanandsons/react-responsive-tab-pills
 ```
 
 ### Demo
-View the [DEMO](https://opuscapita.github.io/react-responsive-navbar)
+View the [DEMO](https://normanandsons.github.io/react-responsive-tab-pills)
 
 ### Builds
 #### UMD
@@ -27,35 +27,33 @@ Also you need to configure sass loader, since all the styles are in sass format.
 | className          | string                       |                     | Custon className                            |
 | activeKey          | number || object             | required            | Navbar item to be active initially          |
 | list               | array of object (name, href) | required            | List of navbar items                        |
-| showNavItemBorder  | boolean                      | false               | show bottom-border below navbar items       |
-| showNavItemTooltip | boolean                      | true                | enables tooltips for nav items              |
-| tooltipDelay       | number                       | 2000                | delay before tooltip becomes visible        |
 | fontSize           | string                       | 'inherit'           | override for fontSize                       |
 | fontWeight         | string                       | 'inherit'           | override for fontWeight                     |
-| placeholder        | string                       | 'more...'           | override for placeholder text               |
 | height             | string                       | 40px                | override for height                         |
 | height             | string                       | 40px                | override for height                         |
 | onSelect           | function                     |                     | Callback fired when the active item changes |
-| componentLeft      | node                         |                     | Custom component aligned to left            |
-| componentRight     | node                         |                     | Custom component aligned to right           |
+| allowReorder       | boolean                      |                     | Allow drag and drop reorder                 |
+| onReorder          | function                     |                     | Callback fired when pills rearranged        |
+| allowClose         | boolean                      |                     | Allow pills to be closable                  |
+| onClose            | function                     |                     | Callback fired when pills closed            |
 
 ### Code example
 ```jsx
-import ResponsiveNavbar from '@opuscapita/react-responsive-navbar';
+import ResponsiveTabPills from '@normanandsons/react-responsive-tab-pills';
 
 const ResponsiveNavbarView = (props) => {
   const list = [
-    { name: 'Item 1', href: '/item1' },
-    { name: 'Item 2', href: '/item2' },
+    { name: 'Item 1', id: 0, href: '/settings' },
+    { name: 'Item 2', id: 1, href: '/help' },
   ];
 
-  const activeKey = 2;
+  const activeKey = 1;
 
   return (
-    <ResponsiveNavbar
+    <ResponsiveTabPills
       activeKey={activeKey}
       list={list}
-      onSelect={(href) => { props.router.push(href); }}
+      onSelect={(id, index) => { props.router.push(list[index].href); }}
     />
   );
 };

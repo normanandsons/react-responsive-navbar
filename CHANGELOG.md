@@ -72,7 +72,7 @@
 * Changed README.md to new react component template format
 
 ## 3.0.0
-* ResponsiveNavbar is changed from named export to default export
+* ResponsiveTabPills is changed from named export to default export
 * Changed height configurable, default 40px
 * Update to React 16.2
 * New template and builds
