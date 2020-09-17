@@ -8,6 +8,7 @@
   --ess-tab-container-min-width: 200px;
   --ess-tab-dropdown-trigger-width: 24px;
   --ess-tab-dropdown-min-width: 110px;
+  --ess-tab-dropdown-max-width: 200px;
   --ess-tab-border-radius: 2px;
   --ess-tab-font-size: 11px;
   --ess-menu-border: #00000020;
@@ -35,8 +36,7 @@
   color: var(--ess-tab-background);
 }
 
-.responsive-navbar-container {
-  font-family: Verdana;
+.responsive-tab-pills-dropdown {
   display: flex;
   width: 100%;
   flex-direction: row;
@@ -61,16 +61,16 @@
 
   .selected {
     box-shadow: none;
-    .responsive-navbar-item-text {
+    .tab-pill-item {
       background: var(--ess-tab-background-active);
     }
   }
 
-  .with-close .responsive-navbar-item-text {
+  .with-close .tab-pill-item {
     padding-right: 18px;
   }
 
-  .responsive-navbar-item-text {
+  .tab-pill-item {
     overflow-x: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -91,7 +91,7 @@
     }
   }
 
-  .responsive-navbar-select {
+  .responsive-tab-dropdown {
     font-weight: inherit;
     font-size: inherit;
     height: inherit;
@@ -110,10 +110,12 @@
       right: 0;
       top: 20px;
       min-width: var(--ess-tab-dropdown-min-width);
+      max-width: var(--ess-tab-dropdown-max-width);
       border-radius: var(--ess-tab-border-radius);
       border: 1px solid var(--ess-menu-border);
       box-shadow: var(--ess-menu-shadow);
       .dropdown-option {
+        box-sizing: border-box;
         overflow-x: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -126,6 +128,9 @@
         color: var(--ess-text-primary);
         font-size: var(--ess-tab-font-size);
         position: relative;
+        &.with-close {
+          padding-right: 20px;
+        }
         &.selected {
           background: var(--ess-tab-background-active);
         }

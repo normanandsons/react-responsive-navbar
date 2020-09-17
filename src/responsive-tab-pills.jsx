@@ -190,7 +190,7 @@ export default class ResponsiveTabPills extends React.Component {
           if (r && !this.itemWidths[index]) this.itemWidths[index] = r.offsetWidth;
         }}
       >
-        <span className='responsive-navbar-item-text'>
+        <span className='tab-pill-item'>
           {item.name}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
           {allowClose && <i tabIndex={index + 1} role='button' className='fa fa-times' onClick={(event) => this.handleClose(event, item.id, index)} />}
@@ -271,7 +271,7 @@ export default class ResponsiveTabPills extends React.Component {
     return (
       <div
         id={`${id}-select`}
-        className={`responsive-navbar-select ${borderClass}`}
+        className={`responsive-tab-dropdown ${borderClass}`}
         style={{ fontWeight, fontSize }}
         ref={(r) => {
           this.selectContainerRef = r;
@@ -302,7 +302,7 @@ export default class ResponsiveTabPills extends React.Component {
         ref={(r) => {
           this.navbarContainerRef = r;
         }}
-        className={classnames(`responsive-navbar-container`, className)}
+        className={classnames(`responsive-tab-pills-dropdown`, className)}
         style={navbarStyle}
       >
         {items}
