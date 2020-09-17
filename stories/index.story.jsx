@@ -1,6 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, boolean, object, number } from '@storybook/addon-knobs';
+import { text, boolean, object } from '@storybook/addon-knobs';
 import { Store, StateDecorator } from '@sambego/storybook-state';
 
 // Application
@@ -10,301 +10,301 @@ import NavBar from '../src/responsive-tab-pills';
 /* eslint-disable no-console */
 const list = [
   {
-    "name": "A",
-    "id": "A"
+    name: 'A',
+    id: 'A',
   },
   {
-    "name": "AAL",
-    "id": "AAL"
+    name: 'AAL',
+    id: 'AAL',
   },
   {
-    "name": "AAP",
-    "id": "AAP"
+    name: 'AAP',
+    id: 'AAP',
   },
   {
-    "name": "AAPL",
-    "id": "AAPL"
+    name: 'AAPL',
+    id: 'AAPL',
   },
   {
-    "name": "ABBV",
-    "id": "ABBV"
+    name: 'ABBV',
+    id: 'ABBV',
   },
   {
-    "name": "ABC",
-    "id": "ABC"
+    name: 'ABC',
+    id: 'ABC',
   },
   {
-    "name": "ABMD",
-    "id": "ABMD"
+    name: 'ABMD',
+    id: 'ABMD',
   },
   {
-    "name": "ABT",
-    "id": "ABT"
+    name: 'ABT',
+    id: 'ABT',
   },
   {
-    "name": "ACN",
-    "id": "ACN"
+    name: 'ACN',
+    id: 'ACN',
   },
   {
-    "name": "ADBE",
-    "id": "ADBE"
+    name: 'ADBE',
+    id: 'ADBE',
   },
   {
-    "name": "ADI",
-    "id": "ADI"
+    name: 'ADI',
+    id: 'ADI',
   },
   {
-    "name": "ADM",
-    "id": "ADM"
+    name: 'ADM',
+    id: 'ADM',
   },
   {
-    "name": "ADP",
-    "id": "ADP"
+    name: 'ADP',
+    id: 'ADP',
   },
   {
-    "name": "ADS",
-    "id": "ADS"
+    name: 'ADS',
+    id: 'ADS',
   },
   {
-    "name": "ADSK",
-    "id": "ADSK"
+    name: 'ADSK',
+    id: 'ADSK',
   },
   {
-    "name": "AEE",
-    "id": "AEE"
+    name: 'AEE',
+    id: 'AEE',
   },
   {
-    "name": "AEP",
-    "id": "AEP"
+    name: 'AEP',
+    id: 'AEP',
   },
   {
-    "name": "AES",
-    "id": "AES"
+    name: 'AES',
+    id: 'AES',
   },
   {
-    "name": "AFL",
-    "id": "AFL"
+    name: 'AFL',
+    id: 'AFL',
   },
   {
-    "name": "AGN",
-    "id": "AGN"
+    name: 'AGN',
+    id: 'AGN',
   },
   {
-    "name": "AIG",
-    "id": "AIG"
+    name: 'AIG',
+    id: 'AIG',
   },
   {
-    "name": "AIV",
-    "id": "AIV"
+    name: 'AIV',
+    id: 'AIV',
   },
   {
-    "name": "AIZ",
-    "id": "AIZ"
+    name: 'AIZ',
+    id: 'AIZ',
   },
   {
-    "name": "AJG",
-    "id": "AJG"
+    name: 'AJG',
+    id: 'AJG',
   },
   {
-    "name": "AKAM",
-    "id": "AKAM"
+    name: 'AKAM',
+    id: 'AKAM',
   },
   {
-    "name": "ALB",
-    "id": "ALB"
+    name: 'ALB',
+    id: 'ALB',
   },
   {
-    "name": "ALGN",
-    "id": "ALGN"
+    name: 'ALGN',
+    id: 'ALGN',
   },
   {
-    "name": "ALK",
-    "id": "ALK"
+    name: 'ALK',
+    id: 'ALK',
   },
   {
-    "name": "ALL",
-    "id": "ALL"
+    name: 'ALL',
+    id: 'ALL',
   },
   {
-    "name": "ALLE",
-    "id": "ALLE"
+    name: 'ALLE',
+    id: 'ALLE',
   },
   {
-    "name": "ALXN",
-    "id": "ALXN"
+    name: 'ALXN',
+    id: 'ALXN',
   },
   {
-    "name": "AMAT",
-    "id": "AMAT"
+    name: 'AMAT',
+    id: 'AMAT',
   },
   {
-    "name": "AMCR",
-    "id": "AMCR"
+    name: 'AMCR',
+    id: 'AMCR',
   },
   {
-    "name": "AMD",
-    "id": "AMD"
+    name: 'AMD',
+    id: 'AMD',
   },
   {
-    "name": "AME",
-    "id": "AME"
+    name: 'AME',
+    id: 'AME',
   },
   {
-    "name": "AMGN",
-    "id": "AMGN"
+    name: 'AMGN',
+    id: 'AMGN',
   },
   {
-    "name": "AMP",
-    "id": "AMP"
+    name: 'AMP',
+    id: 'AMP',
   },
   {
-    "name": "AMT",
-    "id": "AMT"
+    name: 'AMT',
+    id: 'AMT',
   },
   {
-    "name": "AMZN",
-    "id": "AMZN"
+    name: 'AMZN',
+    id: 'AMZN',
   },
   {
-    "name": "ANET",
-    "id": "ANET"
+    name: 'ANET',
+    id: 'ANET',
   },
   {
-    "name": "ANSS",
-    "id": "ANSS"
+    name: 'ANSS',
+    id: 'ANSS',
   },
   {
-    "name": "ANTM",
-    "id": "ANTM"
+    name: 'ANTM',
+    id: 'ANTM',
   },
   {
-    "name": "AON",
-    "id": "AON"
+    name: 'AON',
+    id: 'AON',
   },
   {
-    "name": "AOS",
-    "id": "AOS"
+    name: 'AOS',
+    id: 'AOS',
   },
   {
-    "name": "APA",
-    "id": "APA"
+    name: 'APA',
+    id: 'APA',
   },
   {
-    "name": "APD",
-    "id": "APD"
+    name: 'APD',
+    id: 'APD',
   },
   {
-    "name": "APH",
-    "id": "APH"
+    name: 'APH',
+    id: 'APH',
   },
   {
-    "name": "APTV",
-    "id": "APTV"
+    name: 'APTV',
+    id: 'APTV',
   },
   {
-    "name": "ARE",
-    "id": "ARE"
+    name: 'ARE',
+    id: 'ARE',
   },
   {
-    "name": "ARNC",
-    "id": "ARNC"
+    name: 'ARNC',
+    id: 'ARNC',
   },
   {
-    "name": "ATO",
-    "id": "ATO"
+    name: 'ATO',
+    id: 'ATO',
   },
   {
-    "name": "ATVI",
-    "id": "ATVI"
+    name: 'ATVI',
+    id: 'ATVI',
   },
   {
-    "name": "AVB",
-    "id": "AVB"
+    name: 'AVB',
+    id: 'AVB',
   },
   {
-    "name": "AVGO",
-    "id": "AVGO"
+    name: 'AVGO',
+    id: 'AVGO',
   },
   {
-    "name": "AVY",
-    "id": "AVY"
+    name: 'AVY',
+    id: 'AVY',
   },
   {
-    "name": "AWK",
-    "id": "AWK"
+    name: 'AWK',
+    id: 'AWK',
   },
   {
-    "name": "AXP",
-    "id": "AXP"
+    name: 'AXP',
+    id: 'AXP',
   },
   {
-    "name": "AZO",
-    "id": "AZO"
+    name: 'AZO',
+    id: 'AZO',
   },
   {
-    "name": "BA",
-    "id": "BA"
+    name: 'BA',
+    id: 'BA',
   },
   {
-    "name": "BAC",
-    "id": "BAC"
+    name: 'BAC',
+    id: 'BAC',
   },
   {
-    "name": "BAX",
-    "id": "BAX"
+    name: 'BAX',
+    id: 'BAX',
   },
   {
-    "name": "BBY",
-    "id": "BBY"
+    name: 'BBY',
+    id: 'BBY',
   },
   {
-    "name": "BDX",
-    "id": "BDX"
+    name: 'BDX',
+    id: 'BDX',
   },
   {
-    "name": "BEN",
-    "id": "BEN"
+    name: 'BEN',
+    id: 'BEN',
   },
   {
-    "name": "BF.B",
-    "id": "BF.B"
+    name: 'BF.B',
+    id: 'BF.B',
   },
   {
-    "name": "BIIB",
-    "id": "BIIB"
+    name: 'BIIB',
+    id: 'BIIB',
   },
   {
-    "name": "BK",
-    "id": "BK"
+    name: 'BK',
+    id: 'BK',
   },
   {
-    "name": "BKNG",
-    "id": "BKNG"
+    name: 'BKNG',
+    id: 'BKNG',
   },
   {
-    "name": "BKR",
-    "id": "BKR"
+    name: 'BKR',
+    id: 'BKR',
   },
   {
-    "name": "BLK",
-    "id": "BLK"
+    name: 'BLK',
+    id: 'BLK',
   },
   {
-    "name": "BLL",
-    "id": "BLL"
+    name: 'BLL',
+    id: 'BLL',
   },
   {
-    "name": "BMY",
-    "id": "BMY"
+    name: 'BMY',
+    id: 'BMY',
   },
   {
-    "name": "BR",
-    "id": "BR"
+    name: 'BR',
+    id: 'BR',
   },
   {
-    "name": "BRK.B",
-    "id": "BRK.B"
-  }
+    name: 'BRK.B',
+    id: 'BRK.B',
+  },
 ];
 
 const store = new Store({ activeKey: 0, list });
@@ -312,7 +312,6 @@ const store = new Store({ activeKey: 0, list });
 storiesOf('@normanandsons/react-responsive-tab-pills', module)
   .addDecorator(StateDecorator(store))
   .add('React Responsive Tab Pills', () => (state) => {
-
     const onItemClick = (id, index) => {
       store.set({ activeKey: index });
     };
@@ -346,5 +345,5 @@ storiesOf('@normanandsons/react-responsive-tab-pills', module)
       height: text('Height', '30'),
     };
 
-    return <NavBar {...knobs} />;
+    return <NavBar {...knobs} className={'demo-component'} />;
   });

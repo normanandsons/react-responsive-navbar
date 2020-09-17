@@ -104,7 +104,7 @@ export default class ResponsiveTabPills extends React.Component {
   };
 
   handleOnClick = (id, index) => {
-    this.props.onSelect(id, index);
+    this.props.onSelect(id, index, this.props.list[index]);
   };
 
   handleClose = (event, id, index) => {
@@ -163,7 +163,7 @@ export default class ResponsiveTabPills extends React.Component {
       activeKeyIndex = this.activeItemIndex(activeKey);
     }
 
-    const buttonClass = classnames(className, 'grabbable', {
+    const buttonClass = classnames(className, {
       selected: index === activeKeyIndex,
       'with-close': allowClose,
     });
@@ -190,7 +190,7 @@ export default class ResponsiveTabPills extends React.Component {
           if (r && !this.itemWidths[index]) this.itemWidths[index] = r.offsetWidth;
         }}
       >
-        <span className='tab-pill-item'>
+        <span className='tab-pill-inner'>
           {item.name}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
           {allowClose && <i tabIndex={index + 1} role='button' className='fa fa-times' onClick={(event) => this.handleClose(event, item.id, index)} />}
@@ -234,39 +234,35 @@ export default class ResponsiveTabPills extends React.Component {
 
       const dragOptions = allowReorder
         ? {
-          onDragStart: (e) => this.dragStart(realIndex, e),
-          onDragEnter: (e) => this.dragEnter(realIndex, e),
-          onDragLeave: (e) => this.dragLeave(index, e),
-          onDragEnd: this.dragDrop,
-          draggable: true,
-        }
+            onDragStart: (e) => this.dragStart(realIndex, e),
+            onDragEnter: (e) => this.dragEnter(realIndex, e),
+            onDragLeave: (e) => this.dragLeave(index, e),
+            onDragEnd: this.dragDrop,
+            draggable: true,
+          }
         : {};
 
       const dropdownOptions = {
-        className: classnames('dropdown-option', { selected: list[activeKey].id === item.id }),
-        close: allowClose ? (
-          <i role='button' className='fa fa-times' onClick={(event) => this.handleClose(event, item.id, realIndex)} />
-        ) : null,
+        className: classnames('dropdown-option', { 'with-close': allowClose, selected: list[activeKey].id === item.id }),
+        close: allowClose ? <i role='button' className='fa fa-times' onClick={(event) => this.handleClose(event, item.id, realIndex)} /> : null,
         onSelect: () => {
           this.handleOnClick(item.id, realIndex);
         },
-        ...dragOptions
+        ...dragOptions,
       };
-
 
       return {
         ...item,
-        options: dropdownOptions
+        options: dropdownOptions,
       };
     });
 
     const lineCountNeeded = this.doLineCount();
     const customBorderClass = lineCountNeeded ? 'selected line-count' : 'selected';
-    const inactiveBorder = lineCountNeeded ? 'inactive line-count' : 'inactive';
     // Resolve activeItem
     const activeItem = this.resolveActiveItemFromOptions(selectOptions);
     const activeItemIndex = this.activeItemIndex(activeItem);
-    const borderClass = activeItemIndex >= this.state.lastVisibleItemIndex + 1 ? customBorderClass : inactiveBorder; // eslint-disable-line
+    const borderClass = activeItemIndex >= this.state.lastVisibleItemIndex + 1 ? customBorderClass : '';
 
     return (
       <div
@@ -285,7 +281,7 @@ export default class ResponsiveTabPills extends React.Component {
   render() {
     const { id, className, list, height } = this.props;
     const visibleList = this.state.lastVisibleItemIndex > -2 ? list.slice(0, this.state.lastVisibleItemIndex + 1) : list;
-    const itemClassName = 'responsive-navbar-item inactive-border';
+    const itemClassName = 'tab-pill-item';
     const items = visibleList.map((item, index) => this.navbarItem(item, index, itemClassName));
     const lineCount = this.doLineCount();
     const navbarStyle = {
@@ -302,7 +298,7 @@ export default class ResponsiveTabPills extends React.Component {
         ref={(r) => {
           this.navbarContainerRef = r;
         }}
-        className={classnames(`responsive-tab-pills-dropdown`, className)}
+        className={classnames(`responsive-tab-pills-container`, className)}
         style={navbarStyle}
       >
         {items}
