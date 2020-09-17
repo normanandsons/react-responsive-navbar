@@ -331,6 +331,22 @@ storiesOf('@normanandsons/react-responsive-tab-pills', module)
       });
     };
 
+    const addItem = () => {
+      const newRic = prompt('Enter ric');
+      const items = store.get('list').slice();
+
+      if (newRic) {
+        items.push({
+          name: newRic,
+          id: newRic,
+        });
+      }
+      store.set({
+        list: items,
+        activeKey: items.length - 1,
+      });
+    };
+
     const knobs = {
       list: object('List', state.list),
       allowClose: boolean('Can close tabs', true),
@@ -345,5 +361,11 @@ storiesOf('@normanandsons/react-responsive-tab-pills', module)
       height: text('Height', '30'),
     };
 
-    return <NavBar {...knobs} className={'demo-component'} />;
+    return (
+      <NavBar {...knobs} className={'demo-component'}>
+        <button className={'add'} onClick={addItem}>
+          <i className='fa fa-plus' />
+        </button>
+      </NavBar>
+    );
   });

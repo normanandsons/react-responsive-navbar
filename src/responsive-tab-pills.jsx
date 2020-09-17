@@ -12,8 +12,6 @@ export default class ResponsiveTabPills extends React.Component {
     allowReorder: PropTypes.bool,
     navRenderer: PropTypes.func,
     className: PropTypes.string,
-    fontSize: PropTypes.string,
-    fontWeight: PropTypes.string,
     activeKey: PropTypes.oneOfType([PropTypes.shape({}), PropTypes.number]).isRequired,
     list: PropTypes.arrayOf(
       PropTypes.shape({
@@ -32,12 +30,7 @@ export default class ResponsiveTabPills extends React.Component {
     onClose: () => {},
     allowClose: false,
     allowReorder: false,
-    fontSize: 'inherit',
-    fontWeight: 'inherit',
-    placeholder: 'more...',
     height: 30,
-    componentLeft: null,
-    componentRight: null,
   };
 
   constructor(props) {
@@ -60,7 +53,12 @@ export default class ResponsiveTabPills extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     // Refresh visible items if values change
-    if (this.state.isSelectVisible !== prevState.isSelectVisible || this.state.lastVisibleItemIndex !== prevState.lastVisibleItemIndex) {
+    if (
+      this.state.isSelectVisible !== prevState.isSelectVisible ||
+      this.state.lastVisibleItemIndex !== prevState.lastVisibleItemIndex ||
+      prevProps.activeKey !== this.props.activeKey ||
+      prevProps.list.length !== this.props.list.length
+    ) {
       this.refreshLastVisibleItem();
     }
   }
@@ -73,10 +71,8 @@ export default class ResponsiveTabPills extends React.Component {
   getLastVisibleItemIndex = () => {
     const navBarWidth = this.navbarContainerRef ? this.navbarContainerRef.offsetWidth : 0;
     const selectWidth = this.selectContainerRef ? this.selectContainerRef.offsetWidth : 0;
-    const componentLeftWidth = this.componentLeftContainerRef ? this.componentLeftContainerRef.offsetWidth : 0; // eslint-disable-line
-    const componentRightWidth = this.componentRightContainerRef ? this.componentRightContainerRef.offsetWidth : 0; // eslint-disable-line
 
-    let remainingWidth = navBarWidth - selectWidth - componentLeftWidth - componentRightWidth;
+    let remainingWidth = navBarWidth - selectWidth;
     let lastVisible = 0;
 
     for (let i = 0; i < this.props.list.length; i += 1) {
@@ -150,12 +146,8 @@ export default class ResponsiveTabPills extends React.Component {
   };
 
   // Render navbar item
-  navbarItem = (item, index, className) => {
-    const { activeKey, fontWeight, fontSize, height, allowClose, navRenderer, allowReorder } = this.props;
-
-    if (navRenderer) {
-      return navRenderer(item, index, className, activeKey === index);
-    }
+  navbarItem = (item, index, className, isDumb) => {
+    const { activeKey, height, allowClose, allowReorder } = this.props;
 
     // resolve activeKeyIndex
     let activeKeyIndex = activeKey;
@@ -165,25 +157,25 @@ export default class ResponsiveTabPills extends React.Component {
 
     const buttonClass = classnames(className, {
       selected: index === activeKeyIndex,
-      'with-close': allowClose,
+      'with-close': !isDumb && allowClose,
     });
 
-    const dragOptions = allowReorder
-      ? {
-          onDragStart: (e) => this.dragStart(index, e),
-          onDragEnter: (e) => this.dragEnter(index, e),
-          onDragLeave: (e) => this.dragLeave(index, e),
-          onDragEnd: this.dragDrop,
-          draggable: true,
-        }
-      : {};
+    const dragOptions =
+      allowReorder && !isDumb
+        ? {
+            onDragStart: () => this.dragStart(index),
+            onDragEnter: (e) => this.dragEnter(index, e),
+            onDragLeave: (e) => this.dragLeave(index, e),
+            onDragEnd: this.dragDrop,
+            draggable: true,
+          }
+        : {};
 
     return (
       <button
         {...dragOptions}
         className={buttonClass}
-        style={{ fontWeight, fontSize, minHeight: height }}
-        id={item.id || `navItem${String(index)}`}
+        style={{ minHeight: height }}
         key={item.id || `navitem${String(index)}`}
         onClick={() => this.handleOnClick(item.id, index)}
         ref={(r) => {
@@ -193,7 +185,9 @@ export default class ResponsiveTabPills extends React.Component {
         <span className='tab-pill-inner'>
           {item.name}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
-          {allowClose && <i tabIndex={index + 1} role='button' className='fa fa-times' onClick={(event) => this.handleClose(event, item.id, index)} />}
+          {allowClose && !isDumb && (
+            <i tabIndex={index + 1} role='button' className='fa fa-times' onClick={(event) => this.handleClose(event, item.id, index)} />
+          )}
         </span>
       </button>
     );
@@ -204,19 +198,9 @@ export default class ResponsiveTabPills extends React.Component {
     return list.some((item) => typeof item.name !== 'string');
   };
 
-  resolveActiveItemFromOptions = (selectOptions) => {
-    const { activeKey } = this.props;
-    let activeItem = selectOptions.find((opts) => opts.value === activeKey);
-    if (!activeItem) {
-      activeItem = selectOptions.find((opts) => opts.value === activeKey.value);
-    }
-    return activeItem;
-  };
-
   activeItemIndex = (activeItem) => {
     const { list } = this.props;
-    if (!activeItem) return null;
-    return list.findIndex((item) => item.id === activeItem.value);
+    return list.findIndex((item) => item.id === activeItem.id);
   };
 
   // Render combobox, when all items do not fit
@@ -243,7 +227,7 @@ export default class ResponsiveTabPills extends React.Component {
         : {};
 
       const dropdownOptions = {
-        className: classnames('dropdown-option', { 'with-close': allowClose, selected: list[activeKey].id === item.id }),
+        className: classnames('dropdown-option', { 'with-close': allowClose, selected: list[activeKey] && list[activeKey].id === item.id }),
         close: allowClose ? <i role='button' className='fa fa-times' onClick={(event) => this.handleClose(event, item.id, realIndex)} /> : null,
         onSelect: () => {
           this.handleOnClick(item.id, realIndex);
@@ -257,23 +241,22 @@ export default class ResponsiveTabPills extends React.Component {
       };
     });
 
-    const lineCountNeeded = this.doLineCount();
-    const customBorderClass = lineCountNeeded ? 'selected line-count' : 'selected';
     // Resolve activeItem
-    const activeItem = this.resolveActiveItemFromOptions(selectOptions);
-    const activeItemIndex = this.activeItemIndex(activeItem);
-    const borderClass = activeItemIndex >= this.state.lastVisibleItemIndex + 1 ? customBorderClass : '';
+    const activeItem = list[activeKey] ? selectOptions.find((item) => item.id === list[activeKey].id) : null;
+    const activeButton = activeItem ? this.navbarItem(activeItem, activeKey, 'tab-pill-item', true) : null;
+    const style = { fontWeight, fontSize };
 
     return (
       <div
         id={`${id}-select`}
-        className={`responsive-tab-dropdown ${borderClass}`}
-        style={{ fontWeight, fontSize }}
+        className={classnames(`responsive-tab-dropdown`, { 'with-selected': activeButton })}
+        style={style}
         ref={(r) => {
           this.selectContainerRef = r;
         }}
       >
-        <DropDown value={list[activeKey]} options={selectOptions} />
+        <DropDown value={list[activeKey]} activeInList={activeButton} options={selectOptions} />
+        {this.props.children}
       </div>
     );
   };

@@ -1,8 +1,13 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 class DropDown extends React.Component {
+  static PropTypes = {
+    activeInList: PropTypes.object,
+    value: PropTypes.object,
+    options: PropTypes.array
+  };
+
   state = {
     open: false,
   };
@@ -32,11 +37,12 @@ class DropDown extends React.Component {
   dropdownContainer = React.createRef();
 
   render() {
-    const {options} = this.props;
+    const {options, activeInList} = this.props;
     if (!options || !options.length) return null;
 
     return (
       <React.Fragment>
+        {activeInList}
         <a className={this.props.className} onClick={this.handleFocus}>
           <i className="fa fa-caret-down" aria-hidden="true" />
         </a>

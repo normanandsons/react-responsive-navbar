@@ -2,14 +2,14 @@
   --ess-text-primary: black;
   --ess-tab-background: rgb(235, 236, 240);
   --ess-tab-background-active: rgb(210, 216, 220);
-  --ess-tab-target-background: rgb(235, 236, 240, 0.5);
+  --ess-tab-target-background: rgba(235, 236, 240, 0.5);
   --ess-tab-icon-color: #00000020;
   --ess-tab-icon-color-active: black;
   --ess-tab-container-min-width: 200px;
   --ess-tab-border-radius: 2px;
   --ess-tab-font-size: 11px;
-  --ess-tab-dropdown-trigger-width: 24px;
-  --ess-tab-dropdown-min-width: 80px;
+  --ess-tab-dropdown-trigger-width: 44px;
+  --ess-tab-dropdown-min-width: 120px;
   --ess-tab-dropdown-max-width: 200px;
   --ess-menu-border: #00000020;
   --ess-menu-background: #fff;
@@ -42,6 +42,7 @@
   outline: none;
   box-sizing: border-box;
   padding: 0;
+  max-width: 80px;
 }
 .responsive-tab-pills-container .tab-pill-item:focus {
   box-shadow: none;
@@ -81,7 +82,7 @@
   font-size: inherit;
   height: inherit;
   display: flex;
-  flex-direction: column;
+  flex: 1;
   align-content: center;
   justify-content: center;
   margin: 0;
@@ -89,6 +90,12 @@
   max-width: var(--ess-tab-dropdown-trigger-width);
   position: relative;
   background: var(--ess-menu-background);
+}
+.responsive-tab-pills-container .responsive-tab-dropdown.with-selected {
+  min-width: var(--ess-tab-dropdown-min-width);
+}
+.responsive-tab-pills-container .responsive-tab-dropdown a {
+  display: block;
 }
 .responsive-tab-pills-container .responsive-tab-dropdown .dropdown-options {
   position: absolute;
