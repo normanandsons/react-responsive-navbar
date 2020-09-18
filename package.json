@@ -19,7 +19,7 @@
     "watch:es": "cross-env NODE_ENV=development BUILD_ENV=es babel ./src --out-dir lib/es --copy-files --watch",
     "watch:umd": "cross-env NODE_ENV=development BUILD_ENV=umd webpack --progress --colors --watch",
     "test": "cross-env NODE_ENV=production BUILD_ENV=test mocha",
-    "types": "npx typescript src/*.js --declaration --allowJs --emitDeclarationOnly",
+    "types": "npx typescript src/*.jsx --declaration --allowJs --emitDeclarationOnly",
     "version": "npm run build && git add -A lib",
     "postversion": "git push && git push --tags",
     "storybook:hot": "start-storybook -p 5050"
