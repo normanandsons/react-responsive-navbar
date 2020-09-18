@@ -1,0 +1,147 @@
+:root {
+  --ess-text-primary: black;
+  --ess-tab-background: rgb(235, 236, 240);
+  --ess-tab-background-active: rgb(210, 216, 220);
+  --ess-tab-target-background: rgba(235, 236, 240, 0.5);
+  --ess-tab-icon-color: #00000020;
+  --ess-tab-icon-color-active: black;
+  --ess-tab-container-min-width: 200px;
+  --ess-tab-border-radius: 2px;
+  --ess-tab-font-size: 11px;
+  --ess-tab-dropdown-trigger-width: 44px;
+  --ess-tab-dropdown-min-width: 120px;
+  --ess-tab-dropdown-max-width: 200px;
+  --ess-menu-border: #00000020;
+  --ess-menu-background: #fff;
+  --ess-menu-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+:root[theme='dark'] {
+  --ess-text-primary: white;
+  --ess-tab-background: rgb(35, 36, 40);
+  --ess-tab-background-active: rgb(10, 16, 20);
+  --ess-tab-icon-color: #ffffff20;
+  --ess-tab-icon-color-active: white;
+  --ess-menu-background: #000;
+}
+
+.responsive-tab-pills-container {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  background-color: transparent;
+  min-width: var(--ess-tab-container-min-width);
+}
+.responsive-tab-pills-container .tab-pill-item {
+  cursor: pointer;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  box-sizing: border-box;
+  padding: 0;
+  max-width: 80px;
+}
+.responsive-tab-pills-container .tab-pill-item:focus {
+  box-shadow: none;
+  outline: none;
+}
+.responsive-tab-pills-container .selected {
+  box-shadow: none;
+}
+.responsive-tab-pills-container .selected .tab-pill-inner {
+  background: var(--ess-tab-background-active);
+}
+.responsive-tab-pills-container .tab-pill-inner {
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 0 5px 0 0px;
+  padding: 3px 11px;
+  border-radius: var(--ess-tab-border-radius);
+  background: var(--ess-tab-background);
+  color: var(--ess-text-primary);
+  font-size: var(--ess-tab-font-size);
+  position: relative;
+}
+.responsive-tab-pills-container .tab-pill-inner i.fa {
+  position: absolute;
+  right: 4px;
+  color: var(--ess-tab-icon-color);
+}
+.responsive-tab-pills-container .tab-pill-inner:hover i.fa {
+  color: var(--ess-tab-icon-color-active);
+}
+.responsive-tab-pills-container .with-close .tab-pill-inner {
+  padding-right: 16px;
+}
+.responsive-tab-pills-container .responsive-tab-dropdown {
+  font-weight: inherit;
+  font-size: inherit;
+  height: inherit;
+  display: flex;
+  flex: 1;
+  align-content: center;
+  justify-content: center;
+  margin: 0;
+  min-width: var(--ess-tab-dropdown-trigger-width);
+  max-width: var(--ess-tab-dropdown-trigger-width);
+  position: relative;
+  background: var(--ess-menu-background);
+}
+.responsive-tab-pills-container .responsive-tab-dropdown.with-selected {
+  min-width: var(--ess-tab-dropdown-min-width);
+}
+.responsive-tab-pills-container .responsive-tab-dropdown a {
+  display: block;
+}
+.responsive-tab-pills-container .responsive-tab-dropdown .dropdown-options {
+  position: absolute;
+  max-height: 200px;
+  overflow-y: auto;
+  right: 0;
+  top: 21px;
+  min-width: var(--ess-tab-dropdown-min-width);
+  max-width: var(--ess-tab-dropdown-max-width);
+  border-radius: var(--ess-tab-border-radius);
+  border: 1px solid var(--ess-menu-border);
+  box-shadow: var(--ess-menu-shadow);
+}
+.responsive-tab-pills-container .responsive-tab-dropdown .dropdown-options .dropdown-option {
+  cursor: pointer;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding: 3px 11px;
+  border-radius: var(--ess-tab-border-radius);
+  background: var(--ess-tab-background);
+  color: var(--ess-text-primary);
+  font-size: var(--ess-tab-font-size);
+  position: relative;
+}
+.responsive-tab-pills-container .responsive-tab-dropdown .dropdown-options .dropdown-option.with-close {
+  padding-right: 20px;
+}
+.responsive-tab-pills-container .responsive-tab-dropdown .dropdown-options .dropdown-option.selected {
+  background: var(--ess-tab-background-active);
+}
+.responsive-tab-pills-container .responsive-tab-dropdown .dropdown-options .dropdown-option i.fa {
+  position: absolute;
+  right: 4px;
+  color: var(--ess-tab-icon-color);
+}
+.responsive-tab-pills-container .responsive-tab-dropdown .dropdown-options .dropdown-option:hover i.fa {
+  color: var(--ess-tab-icon-color-active);
+}
+.responsive-tab-pills-container .droppable {
+  --ess-tab-background: var(--ess-tab-target-background);
+}
+.responsive-tab-pills-container .dragged {
+  opacity: 0.1;
+}
