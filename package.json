@@ -2,7 +2,6 @@
   "author": "OpusCapita (www.opuscapita.com)",
   "name": "@normanandsons/react-responsive-tab-pills",
   "version": "4.0.0",
-  "private": false,
   "license": "MIT",
   "description": "OpusCapita responsive navbar",
   "main": "lib/umd/react-responsive-pills.js",
