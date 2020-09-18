@@ -1,7 +1,7 @@
 {
   "author": "OpusCapita (www.opuscapita.com)",
   "name": "@normanandsons/react-responsive-tab-pills",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "license": "MIT",
   "description": "OpusCapita responsive navbar",
   "main": "lib/umd/react-responsive-pills.js",
@@ -9,7 +9,7 @@
   "es": "lib/es/index.js",
   "scripts": {
     "clean": "rimraf lib",
-    "build": "npx typescript src/**/*.jsx --declaration --allowJs --emitDeclarationOnly && npm-run-all clean build:*",
+    "build": "npx typescript src/*.jsx --declaration --allowJs --emitDeclarationOnly && npm-run-all clean build:*",
     "build:cjs": "cross-env NODE_ENV=production BUILD_ENV=cjs babel src --out-dir lib/cjs --copy-files --source-maps inline",
     "build:es": "cross-env NODE_ENV=production BUILD_ENV=es babel src --out-dir lib/es --copy-files --source-maps inline",
     "build:umd": "cross-env NODE_ENV=development BUILD_ENV=umd webpack",
