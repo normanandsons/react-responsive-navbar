@@ -1,7 +1,7 @@
 {
   "author": "OpusCapita (www.opuscapita.com)",
   "name": "@normanandsons/react-responsive-tab-pills",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "license": "MIT",
   "description": "OpusCapita responsive navbar",
   "main": "lib/umd/react-responsive-pills.js",
@@ -9,7 +9,7 @@
   "es": "lib/es/index.js",
   "scripts": {
     "clean": "rimraf lib",
-    "build": "npx typescript src/*.jsx --declaration --allowJs --emitDeclarationOnly && npm-run-all clean build:*",
+    "build": "npm-run-all clean types build:*",
     "build:cjs": "cross-env NODE_ENV=production BUILD_ENV=cjs babel src --out-dir lib/cjs --copy-files --source-maps inline",
     "build:es": "cross-env NODE_ENV=production BUILD_ENV=es babel src --out-dir lib/es --copy-files --source-maps inline",
     "build:umd": "cross-env NODE_ENV=development BUILD_ENV=umd webpack",
@@ -19,6 +19,7 @@
     "watch:es": "cross-env NODE_ENV=development BUILD_ENV=es babel ./src --out-dir lib/es --copy-files --watch",
     "watch:umd": "cross-env NODE_ENV=development BUILD_ENV=umd webpack --progress --colors --watch",
     "test": "cross-env NODE_ENV=production BUILD_ENV=test mocha",
+    "types": "npx typescript src/*.js --declaration --allowJs --emitDeclarationOnly",
     "version": "npm run build && git add -A lib",
     "postversion": "git push && git push --tags",
     "storybook:hot": "start-storybook -p 5050"
